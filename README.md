@@ -1,1 +1,3 @@
-# guitar-shop
+# guitar-shop study project
+
+module 1
