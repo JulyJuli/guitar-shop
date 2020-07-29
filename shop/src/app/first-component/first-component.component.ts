@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../models/category.model';
-import { Course } from '../models/course.model';
+import { Course } from './models/course.model';
+import { Category } from './models/category.model';
 
 @Component({
   selector: 'app-first-component',
@@ -13,7 +13,8 @@ export class FirstComponentComponent implements OnInit {
   public otherAvailableItems: Course[] = [
     new Course('Java Basics', Category.Back, 20, 'Study project in internal course', true),
     new Course('C#', Category.Back, 10, 'Study project in internal course', false),
-    new Course('Knockout', Category.Front, 30, 'Study project in internal course', false)]
+    new Course('Knockout', Category.Front, 30, 'Study project in internal course', false)
+  ];
   
   ngOnInit(): void {
   }
