@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { Course } from './models/course.model';
 import { Category } from './models/category.model';
 
 @Component({
   selector: 'app-first-component',
-  templateUrl: './first-component.component.html',
-  styleUrls: ['./first-component.component.css']
+  templateUrl: './first.component.html'
 })
-export class FirstComponentComponent implements OnInit {
+export class FirstComponent {
   public simpleItem = new Course('Angular', Category.Front, 0, 'Study project in internal course', true);
 
   public otherAvailableItems: Course[] = [
@@ -15,9 +15,6 @@ export class FirstComponentComponent implements OnInit {
     new Course('C#', Category.Back, 10, 'Study project in internal course', false),
     new Course('Knockout', Category.Front, 30, 'Study project in internal course', false)
   ];
-  
-  ngOnInit(): void {
-  }
 
   public getCourseCategory(category: Category): string {
     return Category[category];
