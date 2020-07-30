@@ -1,0 +1,27 @@
+<p class="pl-2">Hi from the first component!</p>
+<h3 class="pl-2 pt-2">Brief course description</h3>
+<table class="table">
+    <thead>
+            <tr>
+                <th>Name:</th>
+                <th>Description:</th>
+                <th>Price:</th>
+                <th>Category:</th>
+            </tr>
+    </thead>
+    <tbody>
+        <tr [ngClass]="simpleItem.isAvailable ? 'text-success' : 'text-danger'">
+            <td>{{simpleItem.name}}</td>
+            <td>{{simpleItem.description}}</td>
+            <td>{{simpleItem.price}}$</td>
+            <td>{{getCourseCategory(simpleItem.category)}}</td>
+        </tr>
+        <tr [ngClass]="item.isAvailable ? 'text-success' : 'text-danger'"
+            *ngFor="let item of otherAvailableItems">
+          <td>{{item.name}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.price}}$</td>
+          <td>{{getCourseCategory(item.category)}}</td>
+        </tr>
+    </tbody>
+</table>
