@@ -1,26 +1,26 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { Product } from 'src/app/product-component/models/product';
+import { ProductModel } from 'src/app/product/models/product.model';
 
 @Injectable()
 export class CartListService {
     isCartChanged = new EventEmitter<void>();
 
     private inCartProducts = [
-        new Product(5, 'Milk', 10, true)
+        new ProductModel(5, 'Milk', 10, true)
     ];
 
-    getExistingProducts(): Product[] {
+    getExistingProducts(): ProductModel[] {
         return this.inCartProducts;
     }
 
-    addProductToCart(product: Product): void {
+    addProductToCart(product: ProductModel): void {
         this.inCartProducts.push(product);
         this.isCartChanged.emit();
     }
 
-    removeProductFromCart(product: Product): void {
+    removeProductFromCart(product: ProductModel): void {
         this.inCartProducts = this.inCartProducts.filter(p => p !== product);
-        this.isCartChanged.emit()
+        this.isCartChanged.emit();
     }
 }
