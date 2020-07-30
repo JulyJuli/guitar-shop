@@ -1,9 +1,9 @@
-import { Category } from './category.model';
+import { CategoryEnum } from './category.model';
 
-export class Course {
+export class CourseModel {
     constructor(
         public name: string,
-        public category: Category,
+        public category: CategoryEnum,
         public price: number,
         public description: string,
         public isAvailable: boolean) {}
