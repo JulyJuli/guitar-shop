@@ -2,7 +2,7 @@ import { Product } from '../models/product';
 import { CartListService } from 'src/app/cart-list/services/cart-list-service';
 import { Injectable, EventEmitter } from '@angular/core';
 
-@Injectable() 
+@Injectable()
 export class ProductService {
     isProductListChanged = new EventEmitter<void>();
 

@@ -21,6 +21,6 @@ export class CartListService {
 
     removeProductFromCart(product: Product): void {
         this.inCartProducts = this.inCartProducts.filter(p => p !== product);
-        this.isCartChanged.emit()
+        this.isCartChanged.emit();
     }
 }
