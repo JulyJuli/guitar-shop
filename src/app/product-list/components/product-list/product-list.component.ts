@@ -10,7 +10,8 @@ import { ProductService } from 'src/app/product/services/product-service';
 export class ProductListComponent implements OnInit {
   productList: ProductModel[];
 
-  constructor(public productService: ProductService) { }
+  // если сервис не используется в шаблоне, то делаем его приватным
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productList = this.productService.getProducts();
@@ -18,3 +19,4 @@ export class ProductListComponent implements OnInit {
       () => this.productList = this.productService.getProducts());
   }
 }
+// этот компонент можно переместить в папку product/components/product-list
