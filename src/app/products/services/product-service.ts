@@ -13,7 +13,7 @@ export class ProductService {
         new ProductModel(3, 'Candies', 5, true)
     ];
 
-    constructor(public cartService: CartListService) {}
+    constructor(private cartService: CartListService) {}
 
     getProducts(): ProductModel[] {
         return this.availableProducts;

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ProductModel } from 'src/app/product/models/product.model';
-import { ProductService } from 'src/app/product/services/product-service';
+import { ProductModel } from 'src/app/products/models/product.model';
+import { ProductService } from 'src/app/products/services/product-service';
 
 @Component({
   selector: 'app-product-list-component',
@@ -10,7 +9,6 @@ import { ProductService } from 'src/app/product/services/product-service';
 export class ProductListComponent implements OnInit {
   productList: ProductModel[];
 
-  // если сервис не используется в шаблоне, то делаем его приватным
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
@@ -18,5 +16,8 @@ export class ProductListComponent implements OnInit {
     this.productService.isProductListChanged.subscribe(
       () => this.productList = this.productService.getProducts());
   }
+
+  onBuyProduct(product: ProductModel): void {
+    this.productService.addProductToCart(product);
+  }
 }
-// этот компонент можно переместить в папку product/components/product-list

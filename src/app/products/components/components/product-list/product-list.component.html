@@ -13,7 +13,7 @@
                 *ngFor="let item of productList">
             <td>{{item.name}}</td>
             <td>{{item.price}}$</td>
-            <td><app-product-component [productId]="item.id"></app-product-component></td>
+            <td><app-product-component [productId]="item.id" (product)="onBuyProduct($event)"></app-product-component></td>
             </tr>
         </tbody>
     </table>
