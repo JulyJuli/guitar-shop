@@ -8,15 +8,16 @@ import { CategoryEnum } from '../../models/category.model';
   templateUrl: './first.component.html'
 })
 export class FirstComponent {
-  public simpleItem = new CourseModel('Angular', CategoryEnum.Front, 0, 'Study project in internal course', true);
+  // не ставим модификатор public - по умолчанию все является публичным
+  simpleItem = new CourseModel('Angular', CategoryEnum.Front, 0, 'Study project in internal course', true);
 
-  public otherAvailableItems: CourseModel[] = [
+  otherAvailableItems: CourseModel[] = [
     new CourseModel('Java Basics', CategoryEnum.Back, 20, 'Study project in internal course', true),
     new CourseModel('C#', CategoryEnum.Back, 10, 'Study project in internal course', false),
     new CourseModel('Knockout', CategoryEnum.Front, 30, 'Study project in internal course', false)
   ];
 
-  public getCourseCategory(category: CategoryEnum): string {
+  getCourseCategory(category: CategoryEnum): string {
     return CategoryEnum[category];
   }
 }
