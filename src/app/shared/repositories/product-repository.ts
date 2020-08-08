@@ -21,6 +21,8 @@ export class ProductRepository {
         if (existingProduct.numberOfAvailableProducts === 0) {
             existingProduct.product.isAvailable = false;
         }
+
+        this.isAvailableProductListChanged.emit();
     }
 
     increaseNumberOfSpecificProduct(product: ProductModel) {

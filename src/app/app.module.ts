@@ -8,20 +8,21 @@ import { HighlightDirective } from './shared/directives/highlight.directive';
 import { ProductRepository } from './shared/repositories/product-repository';
 import { CartModule } from './cart/cart.module';
 import { ProductModule } from './products/product.module';
-import { ProductListComponent } from './products/components/components/product-list/product-list.component';
-import { CartListComponent } from './cart/components/cart-list/cart-list.component';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FirstComponent,
-    HighlightDirective
+    FirstComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CartModule,
-    ProductModule
+    ProductModule,
+    CommonModule,
+    SharedModule
   ],
   exports: [
     HighlightDirective

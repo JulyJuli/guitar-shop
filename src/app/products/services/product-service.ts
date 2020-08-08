@@ -11,6 +11,7 @@ export class ProductService {
     private availableProducts: ProductModel[] = [];
 
     constructor(private cartService: CartListService, private productRepository: ProductRepository) {
+        this.availableProducts = this.productRepository.getProducts();
         this.productRepository.isAvailableProductListChanged.subscribe(
             () => this.availableProducts = this.productRepository.getProducts());
      }
@@ -26,7 +27,6 @@ export class ProductService {
     addProductToCart(product: ProductModel) {
         this.cartService.addProductToCart(product);
         this.productRepository.decreaseNumberOfSpecificProduct(product.id);
-        this.availableProducts = this.productRepository.getProducts();
         this.isProductListChanged.emit();
     }
 }

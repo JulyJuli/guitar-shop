@@ -4,8 +4,7 @@ import { ProductModel } from 'src/app/products/models/product.model';
 
 @Component({
   selector: 'app-cart-item-component',
-  templateUrl: './cart-item.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './cart-item.component.html'
 })
 export class CartItemComponent implements OnDestroy {
   @Input() item: {product: ProductModel, numberOfProducts: number};
