@@ -1,20 +1,13 @@
-<div *ngIf="productList.length > 0">
-    <h3>Product List</h3>
-    <table class="table">
-        <thead>
-                <tr>
-                    <th>Name:</th>
-                    <th>Price:</th>
-                    <th></th>
-                </tr>
-        </thead>
-        <tbody>
-            <tr [ngClass]="item.isAvailable ? 'text-success' : 'text-danger'"
-                *ngFor="let item of productList">
-            <td>{{item.name}}</td>
-            <td>{{item.price}}$</td>
-            <td><app-product-component [productId]="item.id" (product)="onBuyProduct($event)"></app-product-component></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div>
+<h3 class="pl-2 pt-2 pb-3">Product List</h3>
+  <div class="d-flex flex-row" *ngIf="productList.length > 0">
+      <label class="col font-weight-bold">Name:</label>
+      <label class="col font-weight-bold">Price:</label>
+      <label class="col font-weight-bold"></label>
+    </div>
+    <span *ngFor="let item of productList">
+        <app-product-component
+          [sourceProduct]="item"
+          (boughtProduct)="onBuyProduct($event)"></app-product-component>
+      </span>
+    </div>

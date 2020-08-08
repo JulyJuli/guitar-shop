@@ -8,7 +8,7 @@ export class ProductService {
     isProductListChanged = new EventEmitter<void>();
 
     private availableProducts =  [
-        new ProductModel(1, 'Milk', 10, true),
+        new ProductModel(5, 'Milk', 10, true),
         new ProductModel(2, 'Coffee', 20, false),
         new ProductModel(3, 'Candies', 5, true)
     ];

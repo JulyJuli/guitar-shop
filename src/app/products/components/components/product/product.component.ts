@@ -1,22 +1,24 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ProductService } from 'src/app/products/services/product-service';
-import { ProductModel } from 'src/app/products/models/product.model';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
+import { ProductModel } from 'src/app/products/models/product.model';
 
 @Component({
   selector: 'app-product-component',
-  templateUrl: './product.component.html'
+  templateUrl: './product.component.html',
+  styles: ['./product.component.css']
 })
-export class ProductComponent {
-  @Input() productId: number;
-  @Output() product = new EventEmitter<ProductModel>();
+export class ProductComponent implements OnDestroy {
+  @Input() sourceProduct: ProductModel;
+  @Output() boughtProduct = new EventEmitter<ProductModel>();
 
-  constructor(private productService: ProductService) { }
+  ngOnDestroy(): void {
+    this.boughtProduct.unsubscribe();
+  }
 
   onBuy(): void {
-    const product = this.productService.getProductById(this.productId);
-    console.log(`OnBuy was clicked for ${product.name}`);
-
-    this.product.emit(product);
+    if (this.sourceProduct.isAvailable) {
+      console.log(`OnBuy was clicked for ${this.sourceProduct.name}`);
+      this.boughtProduct.emit(this.sourceProduct);
+    }
   }
 }
