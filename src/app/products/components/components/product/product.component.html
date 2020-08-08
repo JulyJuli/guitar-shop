@@ -6,7 +6,7 @@
       }}">{{ sourceProduct.name }}</label>
     <label class="col">{{ sourceProduct.price }}$</label>
     <span class="col">
-        <button [ngClass]="sourceProduct.isAvailable ? 'enabled' : 'disabled'"
+        <button [ngClass]="sourceProduct.isAvailable ? '' : 'disabled'"
                 class="btn btn-primary"
                 (click)="onBuy()">
             Buy

@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class CartListService {
     inCartProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(
-        [{product: new ProductModel(5, "Milk", 10, true), numberOfProducts: 1}]
+        [{product: new ProductModel(5, 'Milk', 10, true), numberOfProducts: 1}]
     );
 
     addProductToCart(product: ProductModel): void {
@@ -14,17 +14,16 @@ export class CartListService {
         if (existingProduct) {
            existingProduct.numberOfProducts++;
         } else {
-            this.inCartProducts.next(this.inCartProducts.value.concat([{product: product, numberOfProducts: 1}]));
+            this.inCartProducts.next(this.inCartProducts.value.concat([{product, numberOfProducts: 1}]));
         }
     }
 
     removeProductFromCart(productId: number): void {
-        let removedProduct = this.inCartProducts.getValue().find(p => p.product.id === productId);
-        if (removedProduct.numberOfProducts > 1)
-        {
+        const removedProduct = this.inCartProducts.getValue().find(p => p.product.id === productId);
+        if (removedProduct.numberOfProducts > 1) {
             removedProduct.numberOfProducts--;
         } else {
-            this.inCartProducts.next(this.inCartProducts.getValue().filter(p => p.product.id != productId));
+            this.inCartProducts.next(this.inCartProducts.getValue().filter(p => p.product.id !== productId));
         }
     }
 

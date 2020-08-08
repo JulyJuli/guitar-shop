@@ -6,8 +6,6 @@
       <label class="col font-weight-bold"></label>
     </div>
     <span *ngFor="let item of productList">
-        <app-product-component
-          [sourceProduct]="item"
-          (boughtProduct)="onBuyProduct($event)"></app-product-component>
+        <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)"></app-product-component>
       </span>
     </div>

@@ -10,6 +10,7 @@ import { CartListComponent } from './cart/components/cart-list/cart-list.compone
 import { ProductService } from './products/services/product-service';
 import { CartListService } from './cart/services/cart-list-service';
 import { CartItemComponent } from './cart/components/cart-item/cart-item.component';
+import { HighlightDirective } from './shared/directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,15 @@ import { CartItemComponent } from './cart/components/cart-item/cart-item.compone
     ProductComponent,
     CartItemComponent,
     ProductListComponent,
-    CartListComponent
+    CartListComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
+  ],
+  exports: [
+    HighlightDirective
   ],
   providers: [
     ProductService,
