@@ -11,6 +11,7 @@ import { ProductService } from './products/services/product-service';
 import { CartListService } from './cart/services/cart-list-service';
 import { CartItemComponent } from './cart/components/cart-item/cart-item.component';
 import { HighlightDirective } from './shared/directives/highlight.directive';
+import { ProductRepository } from './shared/repositories/product-repository';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HighlightDirective } from './shared/directives/highlight.directive';
   ],
   providers: [
     ProductService,
-    CartListService
+    CartListService,
+    ProductRepository
   ],
   bootstrap: [AppComponent]
 })

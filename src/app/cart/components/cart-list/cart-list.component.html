@@ -10,8 +10,8 @@
         <app-cart-item-component [item]="item" (deletedItemId)="onDeleteProduct($event)"></app-cart-item-component>
     </span>
 
-    <span class="pl-2 pt-2"> The {{cartListService.countNumberOfProducts()}} product(s) cost
-        {{cartListService.countProductsPrice()}}$
+    <span class="pl-2 pt-2"> The {{cartListService.numberOfProducts}} product(s) cost
+        {{cartListService.totalPrice}}$
     </span>
 </div>
 
