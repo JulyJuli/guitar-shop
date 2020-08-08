@@ -4,7 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { FirstComponent } from './first/components/first/first.component';
-import { HighlightDirective } from './shared/directives/highlight.directive';
 import { ProductRepository } from './shared/repositories/product-repository';
 import { CartModule } from './cart/cart.module';
 import { ProductModule } from './products/product.module';
@@ -23,9 +22,6 @@ import { SharedModule } from './shared/shared.module';
     ProductModule,
     CommonModule,
     SharedModule
-  ],
-  exports: [
-    HighlightDirective
   ],
   providers: [
     ProductRepository
