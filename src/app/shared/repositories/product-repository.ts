@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from "@angular/core";
+import { Injectable, EventEmitter } from '@angular/core';
 import { ProductModel } from 'src/app/products/models/product.model';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class ProductRepository {
         {product: new ProductModel(2, 'Coffee', 20, true), numberOfAvailableProducts: 5},
         {product: new ProductModel(3, 'Candies', 5, true), numberOfAvailableProducts: 2}
      ];
- 
+
      getProducts(): ProductModel[] {
         return this.availableProducts.map(p => p.product);
     }

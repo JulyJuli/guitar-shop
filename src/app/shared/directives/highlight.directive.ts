@@ -5,19 +5,19 @@ import { Directive, ElementRef, HostListener, HostBinding } from '@angular/core'
   })
   export class HighlightDirective {
 
-    @HostBinding("style.fontWeight") fontWeight: string;
+    @HostBinding('style.fontWeight') fontWeight: string;
 
-    @HostBinding("style.color") color: string;
+    @HostBinding('style.color') color: string;
 
     @HostListener('mouseover')
     onMouseOver() {
         this.color = 'red';
-        this.fontWeight ="bold";
+        this.fontWeight = 'bold';
     }
 
     @HostListener('mouseout')
     onMouseOut() {
         this.color = '#000';
-        this.fontWeight ="normal";
+        this.fontWeight = 'normal';
     }
 }
