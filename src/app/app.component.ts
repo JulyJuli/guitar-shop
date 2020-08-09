@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { FirstComponent } from './first/components/first/first.component';
 
 @Component({
   selector: 'app-root',
@@ -6,11 +7,11 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild('firstComponentTitle') firstComponentTitle: ElementRef;
+  @ViewChild('appTitle') appComponentTitle: ElementRef;
 
   title = 'shop';
 
   ngAfterViewInit(): void {
-   // this.firstComponentTitle.nativeElement.text = 'Hi from the first component!';
+    this.appComponentTitle.nativeElement.textContent = 'Guitar shop!';
   }
 }

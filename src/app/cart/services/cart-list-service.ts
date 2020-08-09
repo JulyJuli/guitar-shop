@@ -7,7 +7,7 @@ import { ProductRepository } from 'src/app/shared/repositories/product-repositor
 @Injectable()
 export class CartListService {
     inCartProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(
-        [{product: new ProductModel(5, 'Milk', 10, true), numberOfProducts: 1}]
+        [{product: new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, true), numberOfProducts: 1}]
     );
 
     constructor(private productRepository: ProductRepository) {}
