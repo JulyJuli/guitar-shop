@@ -1,8 +1,8 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { CartService } from '../../services/cart-list-service';
 import { ProductModel } from 'src/app/products/models/product.model';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-cart-list-component',
@@ -26,14 +26,16 @@ export class CartListComponent implements OnInit {
   }
 
   onDeleteProduct(removedProductId: number) {
-    this.cartListService.removeProduct(removedProductId, 1);
+    const existingItem = this.cartListService.cartProducts.value.find(p => p.product.id === removedProductId);
+
+    this.cartListService.decreaseQuantity(existingItem.product, 1);
   }
 
   onEditItem(entry: {productId: number, productNumber: number}): void {
-    let existingItem = this.cartListService.cartProducts.value.find(p => p.product.id === entry.productId);
+    const existingItem = this.cartListService.cartProducts.value.find(p => p.product.id === entry.productId);
 
     entry.productNumber > existingItem.numberOfProducts
     ? this.cartListService.increaseQuantity(existingItem.product, entry.productNumber - existingItem.numberOfProducts)
-    : this.cartListService.decreaseQuantity(entry.productId, existingItem.numberOfProducts - entry.productNumber);
+    : this.cartListService.decreaseQuantity(existingItem.product, existingItem.numberOfProducts - entry.productNumber);
   }
 }

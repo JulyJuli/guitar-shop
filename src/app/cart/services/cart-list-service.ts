@@ -30,18 +30,10 @@ export class CartService {
         this.updateCartData();
     }
 
-    decreaseQuantity(productId: number, numberOfProducts: number): void {
-        this.removeProduct(productId, numberOfProducts);
-    }
+    decreaseQuantity(product: ProductModel, numberOfProducts: number): void {
+        this.removeProduct(product.id, numberOfProducts);
 
-    removeProduct(productId: number, numberOfProducts: number): void {
-        const removedProduct = this.cartProducts.getValue().find(p => p.product.id === productId);
-
-       removedProduct.numberOfProducts < numberOfProducts
-        ? this.cartProducts.next(this.cartProducts.getValue().filter(p => p.product.id !== productId))
-        : removedProduct.numberOfProducts -= numberOfProducts;
-
-        this.productRepository.increaseNumberOfSpecificProduct(removedProduct.product, numberOfProducts);
+        this.productRepository.increaseNumberOfSpecificProduct(product, numberOfProducts);
         this.updateCartData();
     }
 
@@ -78,4 +70,13 @@ export class CartService {
         this.totalQuantity.next(this.countTotalQuantity());
         this.totalSum.next(this.countTotalSum());
     }
+
+    private removeProduct(productId: number, numberOfProducts: number): void {
+        const removedProduct = this.cartProducts.getValue().find(p => p.product.id === productId);
+
+        removedProduct.numberOfProducts < numberOfProducts
+        ? this.cartProducts.next(this.cartProducts.getValue().filter(p => p.product.id !== productId))
+        : removedProduct.numberOfProducts -= numberOfProducts;
+    }
+
 }
