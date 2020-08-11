@@ -8,7 +8,7 @@ import { CategoryEnum } from '../../models/category.model';
   templateUrl: './first.component.html'
 })
 export class FirstComponent {
-  // не ставим модификатор public - по умолчанию все является публичным
+
   simpleItem = new CourseModel('Angular', CategoryEnum.Front, 0, 'Study project in internal course', true);
 
   otherAvailableItems: CourseModel[] = [
