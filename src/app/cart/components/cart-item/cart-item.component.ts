@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 import { ProductModel } from 'src/app/products/models/product.model';
 
@@ -9,6 +9,7 @@ import { ProductModel } from 'src/app/products/models/product.model';
 export class CartItemComponent implements OnDestroy {
   @Input() item: {product: ProductModel, numberOfProducts: number};
   @Output() deletedItemId = new EventEmitter<number>();
+  @Output() editedItem = new EventEmitter<{productId: number, productNumber: number}>();
 
   ngOnDestroy(): void {
     this.deletedItemId.unsubscribe();
@@ -16,5 +17,9 @@ export class CartItemComponent implements OnDestroy {
 
   onDelete(): void {
     this.deletedItemId.emit(this.item.product.id);
+  }
+
+  onItemFocusout(productId: number, newValue: string): void {
+    this.editedItem.emit({productId, productNumber: +newValue});
   }
 }
