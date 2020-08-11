@@ -6,7 +6,7 @@ import { ProductModel } from 'src/app/products/models/product.model';
   selector: 'app-product-component',
   templateUrl: './product.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: ['./product.component.css']
+  styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnDestroy {
   @Input() sourceProduct: ProductModel;
