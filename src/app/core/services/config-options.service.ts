@@ -1,12 +1,10 @@
 export class ConfigOptionsService {
-    public config = {
+    private config = {
         id: 1,
         login: 'admin',
         email: 'admin@mail.com'
       };
-    
-      constructor() { }
-    
+
       getConfig(field: string): object {
         if (this.isConfigExist(field)) {
           return { field: this.config[field] };
