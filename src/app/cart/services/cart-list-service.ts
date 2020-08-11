@@ -10,10 +10,12 @@ export class CartService {
         [{product: new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, true), numberOfProducts: 1}]
     );
 
-    totalSum = new Subject<number>();
-    totalQuantity = new Subject<number>();
+    totalSum: number;
+    totalQuantity: number;
 
-    constructor(private productRepository: ProductRepository) {}
+    constructor(private productRepository: ProductRepository) {
+        this.updateCartData();
+    }
 
     increaseQuantity(product: ProductModel, numberOfProducts: number): void {
         const existingProduct = this.cartProducts.value.find(p => p.product.id === product.id);
@@ -61,14 +63,15 @@ export class CartService {
 
     private addProduct(product: ProductModel, numberOfProducts: number): void {
         const existingProduct = this.cartProducts.value.find(p => p.product.id === product.id);
+
         existingProduct
          ? existingProduct.numberOfProducts += numberOfProducts
          : this.cartProducts.next(this.cartProducts.value.concat([{product, numberOfProducts}]));
     }
 
     private updateCartData(): void {
-        this.totalQuantity.next(this.countTotalQuantity());
-        this.totalSum.next(this.countTotalSum());
+        this.totalQuantity = this.countTotalQuantity();
+        this.totalSum = this.countTotalSum();
     }
 
     private removeProduct(productId: number, numberOfProducts: number): void {
