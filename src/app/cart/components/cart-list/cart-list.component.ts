@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 
 import { CartService } from '../../services/cart-list-service';
 import { ProductModel } from 'src/app/products/models/product.model';
@@ -9,7 +9,7 @@ import { ProductModel } from 'src/app/products/models/product.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './cart-list.component.html'
 })
-export class CartListComponent implements OnInit {
+export class CartListComponent implements OnInit, OnDestroy {
   cartListProducts: BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>;
 
   constructor(private ref: ChangeDetectorRef, public cartListService: CartService) {
@@ -23,6 +23,10 @@ export class CartListComponent implements OnInit {
       this.cartListService.cartProducts.subscribe(
         data => this.cartListProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(data)
       );
+  }
+
+  ngOnDestroy(): void {
+      this.cartListService.cartProducts.unsubscribe();
   }
 
   onDeleteProduct(removedProductId: number) {

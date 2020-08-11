@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { ProductModel } from 'src/app/products/models/product.model';
 
@@ -6,9 +6,9 @@ import { ProductModel } from 'src/app/products/models/product.model';
   selector: 'app-product-component',
   templateUrl: './product.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: ['./product.component.css']
+  styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnDestroy {
+export class ProductComponent {
   @Input() sourceProduct: ProductModel;
   @Output() boughtProduct = new EventEmitter<ProductModel>();
 
@@ -18,10 +18,6 @@ export class ProductComponent implements OnDestroy {
       this.ref.detectChanges();
     }, 500);
  }
-
-  ngOnDestroy(): void {
-    this.boughtProduct.unsubscribe();
-  }
 
   onBuy(): void {
     if (this.sourceProduct.isAvailable) {
