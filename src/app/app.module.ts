@@ -9,11 +9,13 @@ import { CartModule } from './cart/cart.module';
 import { ProductModule } from './products/product.module';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
+import { AboutComponent } from './layout/components/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FirstComponent
+    FirstComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
