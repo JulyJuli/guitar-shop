@@ -11,6 +11,7 @@ export class CartItemComponent implements OnDestroy {
   @Output() deletedItemId = new EventEmitter<number>();
 
   ngOnDestroy(): void {
+    // не встречал ранее такого варианта, что от аутпута надо отписываться
     this.deletedItemId.unsubscribe();
   }
 
