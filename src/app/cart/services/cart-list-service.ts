@@ -10,7 +10,9 @@ import { CartLazyModule } from '../cart-lazy.module';
 })
 export class CartService {
     cartProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(
-        [{product: new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, true), numberOfProducts: 1}]
+        [{product:
+            new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, new Date('2020.01.30'), true),
+            numberOfProducts: 1}]
     );
 
     totalSum: number;

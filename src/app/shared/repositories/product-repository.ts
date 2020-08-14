@@ -6,9 +6,15 @@ export class ProductRepository {
     isAvailableProductListChanged = new EventEmitter<void>();
 
     private availableProducts: {product: ProductModel, numberOfAvailableProducts: number}[] =  [
-        {product: new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, true), numberOfAvailableProducts: 100},
-        {product: new ProductModel(2, 'Dean MLX Flame Top, Trans Red', 520, true), numberOfAvailableProducts: 50},
-        {product: new ProductModel(3, 'Ibanez JEM Junior Steve Vai, White', 440, true), numberOfAvailableProducts: 20}
+        {product:
+            new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, new Date(2020, 3, 15), true),
+            numberOfAvailableProducts: 100},
+        {product:
+            new ProductModel(2, 'Dean MLX Flame Top, Trans Red', 520,  new Date(2019, 3, 15), true),
+            numberOfAvailableProducts: 50},
+        {product:
+            new ProductModel(3, 'Ibanez JEM Junior Steve Vai, White', 440, new Date(2020, 6, 5), true),
+            numberOfAvailableProducts: 20}
      ];
 
      getProducts(): ProductModel[] {

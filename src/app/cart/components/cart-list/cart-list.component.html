@@ -14,7 +14,7 @@
 
     <div class="d-flex flex-row pt-2 pb-2">
     <span class="col pl-2 pt-2"> The {{cartListService.totalQuantity}} product(s) cost
-        {{cartListService.totalSum}}$
+        {{cartListService.totalSum | currency:'':'symbol':'.1-1'}}
     </span>
     <span class="col">
     <button class="btn btn-secondary" (click)="cartListService.removeAllProducts()">Remove All</button>

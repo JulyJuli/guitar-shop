@@ -4,7 +4,8 @@
           ? ''
           : 'The product {sourceProduct.name} is not available'
       }}">{{ sourceProduct.name }}</label>
-    <label class="col">{{ sourceProduct.price }}$</label>
+    <label class="col">{{ sourceProduct.price | currency:'':'symbol':'.1-1' }}</label>
+    <label class="col">{{ sourceProduct.supplyDate | date:"MM/dd/yy" }}</label>
     <span class="col">
         <button [ngClass]="sourceProduct.isAvailable ? '' : 'disabled'"
                 class="btn btn-primary"
