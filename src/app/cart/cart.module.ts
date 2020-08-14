@@ -19,6 +19,6 @@ import { SharedModule } from '../shared/shared.module';
     CartItemComponent
   ],
   providers: [
-    CartService
+    CartService // желательно регистрировать через декоратор сервиса
   ]})
   export class CartModule { }
