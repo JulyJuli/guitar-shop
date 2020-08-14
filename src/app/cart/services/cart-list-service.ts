@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { ProductModel } from 'src/app/products/models/product.model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ProductRepository } from 'src/app/shared/repositories/product-repository';
+import { CartLazyModule } from '../cart-lazy.module';
 
-@Injectable()
+@Injectable({
+    providedIn: CartLazyModule
+})
 export class CartService {
     cartProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(
         [{product: new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, true), numberOfProducts: 1}]
