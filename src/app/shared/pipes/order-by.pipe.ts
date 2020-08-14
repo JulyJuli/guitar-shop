@@ -1,12 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { ProductModel } from 'src/app/products/models/product.model';
-
 @Pipe({
   name: 'orderby'
 })
 export class OrderByPipe implements PipeTransform {
-  transform(products: ProductModel[], ...args: any[]): ProductModel[] {
+  transform(products: any[], ...args: any[]): any[] {
     const propertyName = args[0];
     const isDesc = args.length > 1 ? args[1] : true;
     const sortedCollection = products.sort((a, b) => {

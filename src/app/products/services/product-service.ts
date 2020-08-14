@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { ProductModel } from '../models/product.model';
 import { CartService } from 'src/app/cart/services/cart-list-service';
 import { ProductRepository } from 'src/app/shared/repositories/product-repository';
+import { CartModel } from 'src/app/cart/models/cart.model';
 
 @Injectable()
 export class ProductService {
@@ -24,7 +25,7 @@ export class ProductService {
     }
 
     addProductToCart(product: ProductModel, numberOfProducts: number) {
-        this.cartService.increaseQuantity(product, numberOfProducts);
+        this.cartService.increaseQuantity(new CartModel(product.id, product.name, product.price, 1), numberOfProducts);
         this.isProductListChanged.emit();
     }
 }

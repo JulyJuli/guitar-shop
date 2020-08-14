@@ -34,8 +34,8 @@ export class ProductRepository {
         this.isAvailableProductListChanged.emit();
     }
 
-    increaseNumberOfSpecificProduct(product: ProductModel, numberOfProducts: number) {
-        const existingProduct = this.availableProducts.find(p => p.product.id === product.id);
+    increaseNumberOfSpecificProduct(productId: number, numberOfProducts: number) {
+        const existingProduct = this.availableProducts.find(p => p.product.id === productId);
         if (existingProduct) {
             existingProduct.numberOfAvailableProducts += numberOfProducts;
             existingProduct.product.isAvailable = true;

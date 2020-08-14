@@ -1,10 +1,10 @@
 <div *ngIf="cartListProducts && cartListProducts.value.length; else cart_is_empty">
     <h3 class="pl-2 pt-2 pb-3">Cart List</h3>
     <div class="d-flex flex-row">
-        <label class="col font-weight-bold">Name:</label>
-        <label class="col font-weight-bold">Price:</label>
+        <label class="col font-weight-bold" (click)="onLabelClick($event.target.innerText)" id="sort">Name:</label>
+        <label class="col font-weight-bold" (click)="onLabelClick($event.target.innerText)" id="sort">Price:</label>
         <label class="col font-weight-bold">Common Price:</label>
-        <label class="col font-weight-bold">Counter:</label>
+        <label class="col font-weight-bold" (click)="onLabelClick($event.target.innerText)" id="sort">Counter:</label>
         <label class="col font-weight-bold"></label>
     </div>
     <span *ngFor="let item of cartListProducts.value">

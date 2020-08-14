@@ -1,14 +1,14 @@
 <div class="d-flex flex-row pt-2">
-    <label class="col">{{item.product.name}}</label>
-    <label class="col">{{item.product.price | currency:'':'symbol':'.1-1'}}</label>
-    <label class="col">{{item.product.price * item.numberOfProducts | currency:'':'symbol':'.1-1'}}</label>
-    <input class="col form-control"
+    <label class="col">{{item.name}}</label>
+    <label class="col">{{item.price | currency:'':'symbol':'.1-1'}}</label>
+    <label class="col">{{item.price * item.numberOfProducts | currency:'':'symbol':'.1-1'}}</label>
+    <input class="col form-control pl-2"
            type="number"
            min="0"
            id="productNumber"
            placeholder="enter number of products"
            value={{item.numberOfProducts}}
-           (focusout)="onItemFocusout(item.product.id, $event.target.value)"
+           (focusout)="onItemFocusout(item.id, $event.target.value)"
            oninput="validity.valid||(value='');">
     <span  class="col">
         <button class="btn btn-secondary" (click)="onDelete()">Delete</button>
