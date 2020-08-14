@@ -3,16 +3,18 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 
 import { CartService } from '../../services/cart-list-service';
 import { ProductModel } from 'src/app/products/models/product.model';
+import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-cart-list-component',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './cart-list.component.html'
+  templateUrl: './cart-list.component.html',
+  providers: [OrderByPipe]
 })
 export class CartListComponent implements OnInit, OnDestroy {
   cartListProducts: BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>;
 
-  constructor(private ref: ChangeDetectorRef, public cartListService: CartService) {
+  constructor(private ref: ChangeDetectorRef, private orderByPipe: OrderByPipe, public cartListService: CartService) {
       ref.detach();
       setInterval(() => {
         this.ref.detectChanges();
@@ -21,7 +23,16 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
       this.cartListService.cartProducts.subscribe(
-        data => this.cartListProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(data)
+        data => {
+
+          // I can demonstrate pipe usage for cart only this way because of numberOfProducts property
+          const sortedCart = this.orderByPipe.transform(data.map(p => p.product), 'name');
+          this.cartListProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(
+            sortedCart.map(p => {
+              const numberOfProduct = data.find(d => d.product.id === p.id).numberOfProducts;
+              return {product: p, numberOfProducts: numberOfProduct};
+            })
+          ); }
       );
   }
 

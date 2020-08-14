@@ -6,7 +6,7 @@
       <label class="col font-weight-bold">Supply Date:</label>
       <label class="col font-weight-bold"></label>
     </div>
-    <span *ngFor="let item of productList | async">
+    <span *ngFor="let item of productList | async | orderby: 'price':false">
         <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)"></app-product-component>
       </span>
 </div>

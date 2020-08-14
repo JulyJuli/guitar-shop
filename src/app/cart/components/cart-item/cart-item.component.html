@@ -1,5 +1,6 @@
 <div class="d-flex flex-row pt-2">
     <label class="col">{{item.product.name}}</label>
+    <label class="col">{{item.product.price | currency:'':'symbol':'.1-1'}}</label>
     <label class="col">{{item.product.price * item.numberOfProducts | currency:'':'symbol':'.1-1'}}</label>
     <input class="col form-control"
            type="number"
