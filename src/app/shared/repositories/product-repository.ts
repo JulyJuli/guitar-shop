@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+
 import { ProductModel } from 'src/app/products/models/product.model';
 
 @Injectable()
