@@ -7,7 +7,6 @@ import { FirstComponent } from './first/components/first/first.component';
 import { ProductRepository } from './shared/repositories/product-repository';
 import { CartModule } from './cart/cart.module';
 import { ProductModule } from './products/product.module';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from './shared/shared.module';
 import { AboutComponent } from './layout/components/about.component';
 
@@ -22,7 +21,6 @@ import { AboutComponent } from './layout/components/about.component';
     AppRoutingModule,
     CartModule,
     ProductModule,
-    CommonModule,
     SharedModule
   ],
   providers: [

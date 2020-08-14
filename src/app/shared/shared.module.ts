@@ -12,7 +12,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
   exports: [
     HighlightDirective,
     TextSizeChangDirective,
-    OrderByPipe
+    OrderByPipe,
+    CommonModule
   ],
   declarations: [
     HighlightDirective,
