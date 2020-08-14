@@ -82,7 +82,7 @@ export class CartService {
     private removeProduct(productId: number, numberOfProducts: number): void {
         const removedProduct = this.cartProducts.getValue().find(p => p.product.id === productId);
 
-        removedProduct.numberOfProducts < numberOfProducts
+        removedProduct.numberOfProducts <= numberOfProducts
         ? this.cartProducts.next(this.cartProducts.getValue().filter(p => p.product.id !== productId))
         : removedProduct.numberOfProducts -= numberOfProducts;
     }
