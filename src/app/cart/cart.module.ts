@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { CartItemComponent } from './components/cart-item/cart-item.component';
-import { CartService } from './services/cart-list-service';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { CartLazyModule } from './cart-lazy.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    SharedModule
+    SharedModule,
+    CartLazyModule
   ],
   exports: [
     CartListComponent
@@ -17,8 +16,5 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     CartListComponent,
     CartItemComponent
-  ],
-  providers: [
-    CartService // желательно регистрировать через декоратор сервиса
   ]})
   export class CartModule { }

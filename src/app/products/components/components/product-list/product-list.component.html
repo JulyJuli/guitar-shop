@@ -1,11 +1,12 @@
 <div>
 <h3 class="pl-2 pt-2 pb-3">Product List</h3>
-  <div class="d-flex flex-row" *ngIf="productList.length > 0">
+  <div class="d-flex flex-row" *ngIf="(productList | async)?.length > 0">
       <label class="col font-weight-bold">Name:</label>
       <label class="col font-weight-bold">Price:</label>
+      <label class="col font-weight-bold">Supply Date:</label>
       <label class="col font-weight-bold"></label>
     </div>
-    <span *ngFor="let item of productList">
+    <span *ngFor="let item of productList | async | orderby: 'price':false">
         <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)"></app-product-component>
       </span>
 </div>

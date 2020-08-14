@@ -13,15 +13,15 @@
         <tr [ngClass]="simpleItem.isAvailable ? 'text-success' : 'text-danger'">
             <td>{{simpleItem.name}}</td>
             <td>{{simpleItem.description}}</td>
-            <td>{{simpleItem.price}}$</td>
-            <td>{{getCourseCategory(simpleItem.category)}}</td>
+            <td>{{simpleItem.price | currency:'':'symbol':'.1-1'}}</td>
+            <td>{{getCourseCategory(simpleItem.category) | uppercase}}</td>
         </tr>
         <tr [ngClass]="item.isAvailable ? 'text-success' : 'text-danger'"
             *ngFor="let item of otherAvailableItems">
           <td>{{item.name}}</td>
           <td>{{item.description}}</td>
           <td>{{item.price}}$</td>
-          <td>{{getCourseCategory(item.category)}}</td>
+          <td>{{getCourseCategory(item.category) | uppercase}}</td>
         </tr>
     </tbody>
 </table>

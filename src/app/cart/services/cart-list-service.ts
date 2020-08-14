@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { ProductModel } from 'src/app/products/models/product.model';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ProductRepository } from 'src/app/shared/repositories/product-repository';
+import { CartLazyModule } from '../cart-lazy.module';
+import { CartModel } from '../models/cart.model';
 
-@Injectable()
+@Injectable({
+    providedIn: CartLazyModule
+})
 export class CartService {
-    cartProducts = new BehaviorSubject<{ product: ProductModel, numberOfProducts: number}[]>(
-        [{product: new ProductModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, true), numberOfProducts: 1}]
-    );
+    cartProducts = new BehaviorSubject<CartModel[]>([new CartModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, 2)]);
 
     totalSum: number;
     totalQuantity: number;
@@ -17,14 +18,14 @@ export class CartService {
         this.updateCartData();
     }
 
-    increaseQuantity(product: ProductModel, numberOfProducts: number): void {
-        const existingProduct = this.cartProducts.value.find(p => p.product.id === product.id);
+    increaseQuantity(product: CartModel, numberOfProducts: number): void {
+        const existingProduct = this.cartProducts.value.find(p => p.id === product.id);
 
         if (numberOfProducts === 0) {
             this.removeProduct(product.id, 0);
         } else {
             existingProduct
-            ? this.addProduct(existingProduct.product, numberOfProducts)
+            ? this.addProduct(existingProduct, numberOfProducts)
             : this.addProduct(product, numberOfProducts);
         }
 
@@ -32,16 +33,16 @@ export class CartService {
         this.updateCartData();
     }
 
-    decreaseQuantity(product: ProductModel, numberOfProducts: number): void {
+    decreaseQuantity(product: CartModel, numberOfProducts: number): void {
         this.removeProduct(product.id, numberOfProducts);
 
-        this.productRepository.increaseNumberOfSpecificProduct(product, numberOfProducts);
+        this.productRepository.increaseNumberOfSpecificProduct(product.id, numberOfProducts);
         this.updateCartData();
     }
 
     removeAllProducts(): void {
         this.cartProducts.value.forEach(item =>
-            this.productRepository.increaseNumberOfSpecificProduct(item.product, item.numberOfProducts));
+            this.productRepository.increaseNumberOfSpecificProduct(item.id, item.numberOfProducts));
         this.cartProducts.next([]);
 
         this.updateCartData();
@@ -49,7 +50,7 @@ export class CartService {
 
     countTotalSum(): number {
          let sum = 0;
-         this.cartProducts.value.forEach((val) => sum += val.product.price * val.numberOfProducts);
+         this.cartProducts.value.forEach((val) => sum += val.price * val.numberOfProducts);
 
          return sum;
     }
@@ -61,12 +62,12 @@ export class CartService {
         return sum;
     }
 
-    private addProduct(product: ProductModel, numberOfProducts: number): void {
-        const existingProduct = this.cartProducts.value.find(p => p.product.id === product.id);
+    private addProduct(product: CartModel, numberOfProducts: number): void {
+        const existingProduct = this.cartProducts.value.find(p => p.id === product.id);
 
         existingProduct
          ? existingProduct.numberOfProducts += numberOfProducts
-         : this.cartProducts.next(this.cartProducts.value.concat([{product, numberOfProducts}]));
+         : this.cartProducts.next(this.cartProducts.value.concat([product]));
     }
 
     private updateCartData(): void {
@@ -75,11 +76,10 @@ export class CartService {
     }
 
     private removeProduct(productId: number, numberOfProducts: number): void {
-        const removedProduct = this.cartProducts.getValue().find(p => p.product.id === productId);
+        const removedProduct = this.cartProducts.getValue().find(p => p.id === productId);
 
-        removedProduct.numberOfProducts < numberOfProducts
-        ? this.cartProducts.next(this.cartProducts.getValue().filter(p => p.product.id !== productId))
+        removedProduct.numberOfProducts <= numberOfProducts
+        ? this.cartProducts.next(this.cartProducts.getValue().filter(p => p.id !== productId))
         : removedProduct.numberOfProducts -= numberOfProducts;
     }
-
 }
