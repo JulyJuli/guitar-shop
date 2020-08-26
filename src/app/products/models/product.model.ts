@@ -5,6 +5,6 @@ export class ProductModel {
         public id: number,
         public name: string,
         public price: number,
-        public supplyDate: Data,
+        public supplyDate: Data, // не понял почему тут такой тип? эта не тип для даты
         public isAvailable: boolean) { }
 }
