@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -9,16 +9,21 @@ import { ProductService } from 'src/app/products/services/product-service';
   selector: 'app-product-list-component',
   templateUrl: './product-list.component.html'
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   productList: Observable<ProductModel[]>;
+  currentProductList: ProductModel[];
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productList = this.productService.getProducts();
-    // а как быть с отпиской?
     this.productService.isProductListChanged.subscribe(
       () => this.productList = this.productService.getProducts());
+    this.productList.subscribe((products: ProductModel[]) => this.currentProductList = products);
+  }
+
+  ngOnDestroy(): void {
+    this.productService.isProductListChanged.unsubscribe();
   }
 
   onBuyProduct(product: ProductModel): void {
