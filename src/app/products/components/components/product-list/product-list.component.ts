@@ -36,12 +36,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onCartClick(): void {
-    const link = ['/cart-list-component'];
+    const link = ['/cart-list'];
     this.router.navigate(link);
   }
 
-  onViewClick(product: ProductModel): void {
-    const link = ['/product-info', product.id];
-    this.router.navigate(link, { state: product });
+  onViewClick(productId: number): void {
+    const link = ['/product-info', productId];
+    this.router.navigate(link);
   }
 }

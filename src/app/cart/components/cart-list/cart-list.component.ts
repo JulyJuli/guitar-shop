@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CartService } from '../../services/cart-list-service';
 import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
 import { CartModel } from '../../models/cart.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-list-component',
@@ -24,7 +25,11 @@ export class CartListComponent implements OnInit {
 
   cartListProducts: BehaviorSubject<CartModel[]>;
 
-  constructor(private ref: ChangeDetectorRef, private orderByPipe: OrderByPipe, public cartListService: CartService) {
+  constructor(
+    private ref: ChangeDetectorRef,
+    private orderByPipe: OrderByPipe,
+    public cartListService: CartService,
+    private router: Router) {
       ref.detach();
       setInterval(() => {
         this.ref.detectChanges();
@@ -41,6 +46,14 @@ export class CartListComponent implements OnInit {
     const existingItem = this.cartListService.cartProducts.value.find(p => p.id === removedProductId);
 
     this.cartListService.decreaseQuantity(existingItem, 1);
+  }
+
+  onBackClick(): void {
+    this.router.navigate(['product-list']);
+  }
+
+  onCheckout(): void {
+    this.router.navigate(['order']);
   }
 
   onEditItem(entry: {productId: number, productNumber: number}): void {

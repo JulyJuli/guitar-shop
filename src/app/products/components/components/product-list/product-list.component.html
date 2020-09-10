@@ -8,6 +8,6 @@
 </button>
   <div class="parent" *ngIf="currentProductList?.length > 0">
     <span *ngFor="let item of currentProductList | orderby: 'price':false">
-        <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)" (viewedProduct)="onViewClick($event)"></app-product-component>
+        <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)" (viewedProduct)="onViewClick($event.id)"></app-product-component>
       </span>
 </div>

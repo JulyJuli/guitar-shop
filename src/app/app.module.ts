@@ -9,6 +9,7 @@ import { CartModule } from './cart/cart.module';
 import { ProductModule } from './products/product.module';
 import { SharedModule } from './shared/shared.module';
 import { AboutComponent } from './layout/components/about.component';
+import { OrderModule } from './orders/order.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AboutComponent } from './layout/components/about.component';
     CartModule,
     ProductModule,
     SharedModule,
+    OrderModule,
     AppRoutingModule
   ],
   providers: [

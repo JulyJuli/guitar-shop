@@ -9,11 +9,11 @@ export class LocalStorageService {
         console.log(key, ' is set.');
     }
 
-    getItem(key: string): string {
+    getItem(key: any): string {
         return JSON.parse(this.storage.getItem(JSON.stringify(key)));
     }
 
-   removeItem(key: string): void {
+   removeItem(key: any): void {
         this.storage.removeItem(key);
         console.log(key, 'is removed.');
     }
