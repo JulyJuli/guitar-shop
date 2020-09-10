@@ -1,5 +1,7 @@
-<h1 #appTitle></h1> 
-<app-about></app-about>
-<app-first-component></app-first-component>
-<app-product-list-component></app-product-list-component>
-<app-cart-list-component></app-cart-list-component>
+<nav class="nav nav-pills nav-fill">
+    <a class="nav-item nav-link active" routerLink="/product-list" routerLinkActive="active">Product List</a>
+    <a class="nav-item nav-link" routerLink="/first-component" routerLinkActive="active">Course List</a>
+    <a class="nav-item nav-link" routerLink="/about-component" routerLinkActive="active">About</a>
+    <a class="nav-item nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+</nav>
+<router-outlet></router-outlet>

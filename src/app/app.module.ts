@@ -18,10 +18,10 @@ import { AboutComponent } from './layout/components/about.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     CartModule,
     ProductModule,
-    SharedModule
+    SharedModule,
+    AppRoutingModule
   ],
   providers: [
     ProductRepository

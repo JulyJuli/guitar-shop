@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+
 import { ProductComponent } from './components/components/product/product.component';
 import { ProductService } from './services/product-service';
 import { ProductListComponent } from './components/components/product-list/product-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProductsRoutingModule } from './products-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    ModalModule.forRoot(),
+    BrowserModule,
+    ProductsRoutingModule,
+    PopoverModule.forRoot()
   ],
   exports: [
     ProductListComponent

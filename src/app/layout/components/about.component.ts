@@ -3,8 +3,8 @@ import { Component, Optional, OnInit, Inject } from '@angular/core';
 import { ConfigOptionsService } from 'src/app/core/services/config-options.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { GeneratorService } from 'src/app/core/services/generator.service';
-import { GeneratorFactory, GeneratorServiceAlias } from 'src/app/core/services/factories/generator.factory';
 import { ConstantService } from 'src/app/core/services/constant.service';
+import { GeneratorFactory, GeneratorServiceAlias } from 'src/app/core/factories/generator.factory';
 
 const constant = new ConstantService();
 @Component({

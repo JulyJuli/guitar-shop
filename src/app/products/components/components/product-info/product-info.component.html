@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card">
+    <div class="container-fliud">
+      <div class="wrapper row">
+        <div class="preview col-md-6">
+          <div class="preview-pic tab-content">
+            <div class="tab-pane active" id="pic-1"><img src="{{product.linkToPicture}}" /></div>
+          </div>
+        </div>
+        <div class="details col-md-6">
+          <div class="row">
+            <div class="col"> 
+              <h3 class="product-title">{{product.name}}</h3>
+            </div>
+            <div class="col">
+              <button type="button" class="pl-2 btn btn-outline-secondary btm-sm" (click)="onBackClick()">
+                Back to Product List
+              </button>
+            </div>
+          </div>
+         
+          <p class="product-description">{{product.description}}</p>
+          <h4 class="price">Price: <span>{{ product.price }}</span></h4>
+          <div class="action float-right">
+            <button class="add-to-cart btn btn-default" type="button">ADD TO CART</button>
+        </div>
+        </div>
+       
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { GeneratorService } from '../generator.service';
+import { GeneratorService } from '../services/generator.service';
 
 export const GeneratorServiceAlias = new InjectionToken<GeneratorService>('GeneratorServiceAlias');
 

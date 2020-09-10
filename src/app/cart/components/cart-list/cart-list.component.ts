@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { CartModel } from '../../models/cart.model';
   styleUrls: ['./cart-list.component.css'],
   providers: [OrderByPipe]
 })
-export class CartListComponent implements OnInit, OnDestroy {
+export class CartListComponent implements OnInit {
   private columnToProductModelPropertyMap: { columnName: string, propertyName: string } [] = [
     { columnName: 'Name:', propertyName: 'name' },
     { columnName: 'Price:', propertyName: 'price' },
@@ -35,10 +35,6 @@ export class CartListComponent implements OnInit, OnDestroy {
       this.cartListService.cartProducts.subscribe(
         data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
       );
-  }
-
-  ngOnDestroy(): void {
-      this.cartListService.cartProducts.unsubscribe();
   }
 
   onDeleteProduct(removedProductId: number) {

@@ -24,6 +24,13 @@ export class ProductService {
         return this.availableProducts;
     }
 
+    getProductById(id: number): any {
+        let product: ProductModel;
+        this.availableProducts.subscribe(products => product = products.find(p => p.id === id));
+
+        return product;
+    }
+
     addProductToCart(product: ProductModel, numberOfProducts: number) {
         this.cartService.increaseQuantity(new CartModel(product.id, product.name, product.price, 1), numberOfProducts);
         this.isProductListChanged.emit();

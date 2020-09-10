@@ -4,5 +4,7 @@ export class ProductModel {
         public name: string,
         public price: number,
         public supplyDate: Date,
+        public description: string,
+        public linkToPicture: string,
         public isAvailable: boolean) { }
 }
