@@ -1,0 +1,18 @@
+<div class="container">
+  <h2 class="text-center p-2">
+    Your Current Order List
+  </h2>
+  
+  <button type="button" class="m-2 btn btn-outline-secondary btm-sm float-right" (click)="onBack()">
+    Back to Cart
+  </button>
+  <div class="container-fluid w-50">
+    <ul class="list-group" *ngFor="let item of cartListProducts.value">
+      <li class="list-group-item">{{item.name}} | {{item.price*item.numberOfProducts | currency:'':'symbol':'.1-1'}} | Number : {{item.numberOfProducts}}</li>
+    </ul>
+  </div>
+
+  <button type="button" class="m-2 btn btn-outline-secondary btm-sm float-right" (click)="onOrder()">
+    Confirm
+  </button>
+</div>

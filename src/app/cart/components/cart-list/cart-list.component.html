@@ -1,3 +1,8 @@
+<div class="m-2">
+    <button type="button" class="m-2 btn btn-outline-secondary btm-sm float-right" (click)="onBackClick()">
+        Back
+      </button>
+</div>
 <div *ngIf="cartListProducts && cartListProducts.value.length; else cart_is_empty">
     <h3 class="pl-2 pt-2 pb-3">Cart List</h3>
     <div class="d-flex flex-row">
@@ -13,13 +18,16 @@
         (editedItem)="onEditItem($event)"></app-cart-item-component>
     </span>
 
-    <div class="d-flex flex-row pt-2 pb-2">
-    <span class="col pl-2 pt-2"> The {{cartListService.totalQuantity}} product(s) cost
-        {{cartListService.totalSum | currency:'':'symbol':'.1-1'}}
-    </span>
-    <span class="col">
-    <button class="btn btn-secondary" (click)="cartListService.removeAllProducts()">Remove All</button>
-    </span>
+    <div class="d-flex flex-row pt-2 pb-2 mt-2">
+        <span class="col pl-2 pt-2"> The {{cartListService.totalQuantity}} product(s) cost
+            {{cartListService.totalSum | currency:'':'symbol':'.1-1'}}
+        </span>
+        <span class="col">
+            <button class="btn btn-secondary" (click)="cartListService.removeAllProducts()">Remove All</button>
+        </span>
+        <span class="col">
+            <button class="btn btn-primary float-center" (click)="onCheckout()">Checkout</button>
+        </span>
     </div>
 </div>
 

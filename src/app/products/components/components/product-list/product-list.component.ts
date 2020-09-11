@@ -1,27 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { ProductModel } from 'src/app/products/models/product.model';
 import { ProductService } from 'src/app/products/services/product-service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-product-list-component',
-  templateUrl: './product-list.component.html'
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
+  childSubscription: Subscription;
   productList: Observable<ProductModel[]>;
+  currentProductList: ProductModel[];
 
-  constructor(private productService: ProductService) { }
+  constructor(
+    private router: Router,
+    private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productList = this.productService.getProducts();
-    // а как быть с отпиской?
-    this.productService.isProductListChanged.subscribe(
+    this.childSubscription = this.productService.isProductListChanged.subscribe(
       () => this.productList = this.productService.getProducts());
+    this.productList.subscribe((products: ProductModel[]) => this.currentProductList = products);
+  }
+
+  ngOnDestroy(): void {
+    this.childSubscription.unsubscribe();
   }
 
   onBuyProduct(product: ProductModel): void {
     this.productService.addProductToCart(product, 1);
+  }
+
+  onCartClick(): void {
+    const link = ['/cart-list'];
+    this.router.navigate(link);
+  }
+
+  onViewClick(productId: number): void {
+    const link = ['/product-info', productId];
+    this.router.navigate(link);
   }
 }
