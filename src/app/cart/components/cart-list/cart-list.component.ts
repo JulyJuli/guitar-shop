@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -29,7 +30,8 @@ export class CartListComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private orderByPipe: OrderByPipe,
     public cartListService: CartService,
-    private router: Router) {
+    private router: Router,
+    private location: Location) {
       ref.detach();
       setInterval(() => {
         this.ref.detectChanges();
@@ -49,7 +51,7 @@ export class CartListComponent implements OnInit {
   }
 
   onBackClick(): void {
-    this.router.navigate(['product-list']);
+    this.location.back();
   }
 
   onCheckout(): void {

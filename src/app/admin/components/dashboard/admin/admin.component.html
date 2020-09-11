@@ -1,0 +1,14 @@
+<div class="col-sm-8">
+    <p>Hello from admin component!</p>
+</div>
+<nav class="p-2">
+    <ul class="nav nav-tabs">
+        <li>
+            <a routerLink="./orders-list" queryParamsHandling="preserve" preserveFragment>Manage Orders</a>
+        </li>
+    </ul>
+</nav>
+<router-outlet></router-outlet>
+<div class="col-sm-4 text-center">
+    <router-outlet></router-outlet>
+</div>

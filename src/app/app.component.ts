@@ -1,4 +1,7 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,12 +9,15 @@ import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-// implements AfterViewInit {
-  @ViewChild('appTitle') appComponentTitle: ElementRef;
 
-  title = 'shop';
+  constructor(public authService: AuthService, private router: Router) { }
 
-  // ngAfterViewInit(): void {
-  //   this.appComponentTitle.nativeElement.textContent = 'Guitar shop!';
-  // }
+  onLogin(): void {
+      this.authService.login();
+  }
+
+  onLogout(): void {
+      this.authService.logout();
+      this.router.navigate(['product-list']);
+  }
 }

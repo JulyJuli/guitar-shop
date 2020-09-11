@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
 
-import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { CartModel } from 'src/app/cart/models/cart.model';
 import { CartService } from 'src/app/cart/services/cart-list-service';
@@ -16,11 +16,11 @@ import { GeneratorService } from 'src/app/core/services/generator.service';
   ]
 })
 export class OrderComponent implements OnInit {
- 
+
   private currentOrderId: string;
   private maxIdLength = 3;
   cartListProducts: BehaviorSubject<CartModel[]>;
-  
+
   constructor(
     private localStorage: LocalStorageService,
     public cartListService: CartService,
@@ -43,7 +43,7 @@ export class OrderComponent implements OnInit {
     this.localStorage.setItem(this.currentOrderId, this.cartListProducts.value);
     this.cartListService.removeAllProducts();
 
-    const link = ['/order-list', this.currentOrderId];
+    const link = ['/order-result', this.currentOrderId];
     this.router.navigate(link);
   }
 }

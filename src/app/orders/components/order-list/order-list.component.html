@@ -1,13 +1,19 @@
-<div class="container">
-  <button type="button" class="m-2 btn btn-outline-secondary btm-sm float-right" (click)="onBackClick()">
-    Back to Product List
-  </button>
-  <h2 class="text-center p-2">
-    Ordered items
-  </h2>
-  <div class="container-fluid w-50">
-    <ul class="list-group" *ngFor="let item of orderedProducts">
-      <li class="list-group-item">{{item.name}} | Number : {{item.numberOfProducts}}</li>
-    </ul>
+<div *ngIf="orderItemsRepo.ordersIds?.length; else no_orders"class="container">
+    <h2 class="text-center p-2">
+      Existing orders
+    </h2>
+
+    <div class="container-fluid w-50">
+      <ul class="list-group" *ngFor="let items of orders | mapToArray">
+        <li>OrderId: {{items.key}}</li>
+        <ul *ngFor="let item of items.value">
+          <li class="list-group-item">{{ item.name }}</li>
+        </ul>
+      </ul>
+    </div>
   </div>
-</div>
+  <ng-template #no_orders>
+    <h2 class="text-center p-2">
+      No orders
+    </h2>
+  </ng-template>

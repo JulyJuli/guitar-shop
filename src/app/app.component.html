@@ -1,7 +1,15 @@
 <nav class="nav nav-pills nav-fill">
     <a class="nav-item nav-link active" routerLink="/product-list" routerLinkActive="active">Product List</a>
     <a class="nav-item nav-link" routerLink="/first-component" routerLinkActive="active">Course List</a>
-    <a class="nav-item nav-link" routerLink="/about-component" routerLinkActive="active">About</a>
+    <a class="nav-item nav-link" routerLink="/about" routerLinkActive="active">About</a>
     <a class="nav-item nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+    <div class="p-2">
+        <button class="btn btn btn-default" (click)="onLogout()" type="button" *ngIf="authService.isLoggedIn; else loginBtn">
+            Logout
+        </button>
+        <ng-template #loginBtn>
+            <button class="btn btn btn-default" type="button" (click)="onLogin()">Login</button>
+        </ng-template>
+    </div>
 </nav>
 <router-outlet></router-outlet>

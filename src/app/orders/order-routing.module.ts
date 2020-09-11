@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../core/guards/auth.guard';
 import { OrderComponent } from './components/order-form/order.component';
-import { OrderListComponent } from './components/order-list/order-list.component';
-
+import { OrderResultComponent } from './components/order-result/order-result.component';
 
 const routes: Routes = [
   {
@@ -10,8 +10,13 @@ const routes: Routes = [
     component: OrderComponent
   },
   {
-    path: 'order-list/:orderId',
-    component: OrderListComponent
+    path: 'order-result/:orderId',
+    component: OrderResultComponent
+  },
+  {
+    path: 'order-list',
+    canActivate: [AuthGuard],
+    component: OrderResultComponent
   }
 ];
 
