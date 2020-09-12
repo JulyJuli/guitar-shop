@@ -1,5 +1,13 @@
 <div>
 <h3 class="p-2 text-center">Product List</h3>
+<div class="dropdown p-2">
+  <label for="product-list"><b>Sort by:</b></label>
+  <br>
+  <select name="product-list" id="product-list" (change)="onSortChange($event.target.value)">
+    <option value="name">Name</option>
+    <option value="price">Price</option>
+  </select>
+</div>
 <button type="button" class="btn btn-outline-primary" style="float: right;" (click)="onCartClick()">
   Cart
   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -7,7 +15,7 @@
 </svg>
 </button>
   <div class="parent" *ngIf="currentProductList?.length > 0">
-    <span *ngFor="let item of currentProductList | orderby: 'price':false">
+    <span *ngFor="let item of currentProductList">
         <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)" (viewedProduct)="onViewClick($event.id)"></app-product-component>
       </span>
 </div>
