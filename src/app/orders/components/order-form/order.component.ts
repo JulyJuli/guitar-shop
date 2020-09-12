@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { CartModel } from 'src/app/cart/models/cart.model';
@@ -15,10 +15,12 @@ import { GeneratorService } from 'src/app/core/services/generator.service';
     { provide: LocalStorageService, useClass: LocalStorageService }
   ]
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnDestroy {
 
   private currentOrderId: string;
   private maxIdLength = 3;
+  private subscription: Subscription;
+
   cartListProducts: BehaviorSubject<CartModel[]>;
 
   constructor(
@@ -30,9 +32,13 @@ export class OrderComponent implements OnInit {
    }
 
   ngOnInit(): void {
-      this.cartListService.cartProducts.subscribe(
+     this.subscription = this.cartListService.cartProducts.subscribe(
         data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onBack(): void {

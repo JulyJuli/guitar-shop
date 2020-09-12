@@ -1,13 +1,13 @@
 <div *ngIf="orderItemsRepo.ordersIds?.length; else no_orders"class="container">
     <h2 class="text-center p-2">
-      Existing orders
+      Existing orders:
     </h2>
 
-    <div class="container-fluid w-50">
-      <ul class="list-group" *ngFor="let items of orders | mapToArray">
+    <div class="container-fluid w-75">
+      <ul class="list-group pt-2" *ngFor="let items of orders | mapToArray">
         <li>OrderId: {{items.key}}</li>
         <ul *ngFor="let item of items.value">
-          <li class="list-group-item">{{ item.name }}</li>
+          <li class="list-group-item">{{ item.name }} <b>Number of bought items: {{ item.numberOfProducts }}</b></li>
         </ul>
       </ul>
     </div>

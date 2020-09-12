@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
 
 import { ProductModel } from 'src/app/products/models/product.model';
 import { ProductService } from 'src/app/products/services/product-service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
