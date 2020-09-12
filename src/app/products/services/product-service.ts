@@ -1,6 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, OnDestroy } from '@angular/core';
 
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 import { ProductModel } from '../models/product.model';
@@ -9,16 +9,22 @@ import { ProductRepository } from 'src/app/shared/repositories/product-repositor
 import { CartModel } from 'src/app/cart/models/cart.model';
 
 @Injectable()
-export class ProductService {
+export class ProductService implements OnDestroy {
+    private subscription: Subscription;
+
     isProductListChanged = new EventEmitter<void>();
 
     private availableProducts: Observable<ProductModel[]>;
 
     constructor(private cartService: CartService, private productRepository: ProductRepository) {
         this.availableProducts = of(this.productRepository.getProducts());
-        this.productRepository.isAvailableProductListChanged.subscribe(
+        this.subscription = this.productRepository.isAvailableProductListChanged.subscribe(
             () => this.availableProducts = of(this.productRepository.getProducts()));
      }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 
     getProducts(): Observable<ProductModel[]> {
         return this.availableProducts;

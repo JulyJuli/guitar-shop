@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
 
 import { ProductModel } from 'src/app/products/models/product.model';
 import { ProductService } from 'src/app/products/services/product-service';
-import { Router } from '@angular/router';
+import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-product-list',
@@ -18,7 +19,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private sortingService: OrderByPipe) { }
 
   ngOnInit(): void {
     this.productList = this.productService.getProducts();
@@ -43,5 +45,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
   onViewClick(productId: number): void {
     const link = ['/product-info', productId];
     this.router.navigate(link);
+  }
+
+  onSortChange(sortKey: string) {
+    this.sortingService.transform(this.currentProductList, sortKey);
   }
 }

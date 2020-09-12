@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { ProductModel } from 'src/app/products/models/product.model';
@@ -12,7 +13,8 @@ import { OrderedItemsRepository } from '../../repositories/ordered-items.reposit
     { provide: LocalStorageService, useClass: LocalStorageService }
   ]
 })
-export class OrderResultComponent implements OnInit {
+export class OrderResultComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
 
   orderedProducts: ProductModel[];
 
@@ -24,12 +26,16 @@ export class OrderResultComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.activatedRouter.params.subscribe(params => {
+    this.subscription = this.activatedRouter.params.subscribe(params => {
       const propertyName = 'orderId';
       this.orderedProducts = (this.localStorage.getItem(params[propertyName]) as any as ProductModel[]);
 
       this.orderedItemsRepo.addId(params[propertyName]);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onBackClick(): void {

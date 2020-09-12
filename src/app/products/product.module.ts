@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -8,7 +9,7 @@ import { ProductService } from './services/product-service';
 import { ProductListComponent } from './components/components/product-list/product-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { ProductsRoutingModule } from './products-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
+import { OrderByPipe } from '../shared/pipes/order-by.pipe';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { BrowserModule } from '@angular/platform-browser';
     ProductListComponent
   ],
   providers: [
-    ProductService
+    ProductService,
+    OrderByPipe
   ]
 })
 export class ProductModule { }
