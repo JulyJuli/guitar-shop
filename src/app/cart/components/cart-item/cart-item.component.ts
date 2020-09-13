@@ -8,11 +8,11 @@ import { CartModel } from '../../models/cart.model';
 })
 export class CartItemComponent {
   @Input() item: CartModel;
-  @Output() deletedItemId = new EventEmitter<number>();
+  @Output() deletedItem = new EventEmitter<CartModel>();
   @Output() editedItem = new EventEmitter<{productId: number, productNumber: number}>();
 
   onDelete(): void {
-    this.deletedItemId.emit(this.item.id);
+    this.deletedItem.emit(this.item);
   }
 
   onItemFocusout(productId: number, newValue: string): void {

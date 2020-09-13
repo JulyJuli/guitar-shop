@@ -32,7 +32,7 @@ export class OrderComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
-     this.subscription = this.cartListService.cartProducts.subscribe(
+     this.subscription = this.cartListService.getCartProducts().subscribe(
         data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
       );
   }

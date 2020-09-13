@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Jackson JS22 JS-Series Dinky, Natural Oil",
+      "price": 200,
+      "supplyDate": "2020, 3, 15",
+      "description": "Developed by Taylor’s Master Builder Andy Powers, this is an innovative new style of bracing. It tackles the issue of achieving sustain and tone without sacrificing volume. V-Class bracing allows he guitar’s top to move and vibrate in a more stable manner, resulting in more focus and response from the wood. This control means more volume and projection. ",
+      "linkToPicture": "https://cdn.shopify.com/s/files/1/1750/3791/products/Reverb_Pics_Website_Redo_-_108_of_130_480x480.jpg?v=1565021194",
+      "isAvailable": true,
+      "numberOfAvailableProducts": 3
+    },
+    {
+      "id": 2,
+      "name": "Dean MLX Flame Top, Trans Red",
+      "price": 520,
+      "supplyDate": "2019, 5, 18",
+      "description": "Developed by Taylor’s Master Builder Andy Powers, this is an innovative new style of bracing. It tackles the issue of achieving sustain and tone without sacrificing volume. V-Class bracing allows he guitar’s top to move and vibrate in a more stable manner, resulting in more focus and response from the wood. This control means more volume and projection. ",
+      "linkToPicture": "https://cdn.shopify.com/s/files/1/1750/3791/products/ReverbandWeb4.4.20-112of114_480x480.jpg?v=1586638055",
+      "isAvailable": true,
+      "numberOfAvailableProducts": 4
+    }
+  ],
+  "cart": []
+}

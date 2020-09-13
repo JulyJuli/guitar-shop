@@ -1,44 +1,72 @@
 import { Injectable, EventEmitter, OnDestroy } from '@angular/core';
 
-import { of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 import { ProductModel } from '../models/product.model';
-import { CartService } from 'src/app/cart/services/cart-list-service';
-import { ProductRepository } from 'src/app/shared/repositories/product-repository';
-import { CartModel } from 'src/app/cart/models/cart.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ProductService implements OnDestroy {
+    private productUrl = 'http://localhost:3000/products';
     private subscription: Subscription;
 
     isProductListChanged = new EventEmitter<void>();
 
-    private availableProducts: Observable<ProductModel[]>;
-
-    constructor(private cartService: CartService, private productRepository: ProductRepository) {
-        this.availableProducts = of(this.productRepository.getProducts());
-        this.subscription = this.productRepository.isAvailableProductListChanged.subscribe(
-            () => this.availableProducts = of(this.productRepository.getProducts()));
-     }
+    constructor(private http: HttpClient) { }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 
     getProducts(): Observable<ProductModel[]> {
-        return this.availableProducts;
+        return this.http.get<ProductModel[]>(this.productUrl);
     }
 
-    getProductById(id: number): any {
-        let product: ProductModel;
-        this.availableProducts.subscribe(products => product = products.find(p => p.id === id));
+    getProductById(id: number): Promise<ProductModel> {
+        const url = `${this.productUrl}/${id}`;
 
-        return product;
+        return this.http
+            .get(url)
+            .toPromise()
+            .then(response => response as ProductModel);
     }
 
-    addProductToCart(product: ProductModel, numberOfProducts: number) {
-        this.cartService.increaseQuantity(new CartModel(product.id, product.name, product.price, 1), numberOfProducts);
-        this.isProductListChanged.emit();
+    decreaseNumberOfSpecificProduct(productId: number, numberOfProducts: number): void {
+        this.getProductById(productId).then(existingProduct => {
+            existingProduct.numberOfAvailableProducts > numberOfProducts
+                ? existingProduct.numberOfAvailableProducts -= numberOfProducts
+                : existingProduct.numberOfAvailableProducts = 0;
+
+            if (existingProduct.numberOfAvailableProducts === 0) {
+                existingProduct.isAvailable = false;
+            }
+
+            this.updateProduct(existingProduct).then(() => this.isProductListChanged.emit());
+        });
+    }
+
+    increaseNumberOfSpecificProduct(productId: number, numberOfProducts: number) {
+        this.getProductById(productId).then(existingProduct => {
+            if (existingProduct) {
+                existingProduct.numberOfAvailableProducts += numberOfProducts;
+                existingProduct.isAvailable = true;
+            }
+
+            this.updateProduct(existingProduct).then(() => this.isProductListChanged.emit());
+        });
+    }
+
+    private updateProduct(update: ProductModel): Promise<ProductModel> {
+        const url = `${this.productUrl}/${update.id}`;
+        const body = JSON.stringify(update);
+        const options = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        };
+
+        return this.http
+            .put(url, body, options)
+            .toPromise()
+            .then(response => response as ProductModel);
     }
 }

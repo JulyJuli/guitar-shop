@@ -5,28 +5,28 @@ import { Subscription } from 'rxjs';
 import { ProductModel } from 'src/app/products/models/product.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/products/services/product-service';
+import { CartService } from 'src/app/cart/services/cart-list-service';
+import { CartModel } from 'src/app/cart/models/cart.model';
 
 @Component({
     selector: 'app-product-info-component',
     templateUrl: './product-info.component.html',
     styleUrls: ['./product-info.component.css']
 })
-export class ProductInfoComponent implements OnInit, OnDestroy {
-    private subscription: Subscription;
-
+export class ProductInfoComponent implements OnInit {
     product: ProductModel;
 
-    constructor(private activatedRouter: ActivatedRoute, private router: Router, private productService: ProductService) { }
+    constructor(
+        private activatedRouter: ActivatedRoute,
+        private router: Router,
+        private productService: ProductService,
+        private cartService: CartService) { }
 
     ngOnInit(): void {
-       this.subscription = this.activatedRouter.params.subscribe(params => {
+       this.activatedRouter.params.subscribe(params => {
             const propertyName = 'productId';
-            this.product = this.productService.getProductById(+params[propertyName]);
+            this.productService.getProductById(+params[propertyName]).then(p => this.product = p);
           });
-    }
-
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
     }
 
     onBackClick(): void {
@@ -34,7 +34,7 @@ export class ProductInfoComponent implements OnInit, OnDestroy {
     }
 
     onBuyClick(): void {
-        this.productService.addProductToCart(this.product, 1);
+       this.cartService.addProductToCart(new CartModel(this.product.id, this.product.name, this.product.price, 0), 1);
     }
 
     onCartClick(): void {

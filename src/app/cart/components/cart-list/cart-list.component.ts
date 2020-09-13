@@ -16,10 +16,10 @@ import { Router } from '@angular/router';
   providers: [OrderByPipe]
 })
 export class CartListComponent implements OnInit, OnDestroy {
-  private columnToProductModelPropertyMap: { columnName: string, propertyName: string } [] = [
+  private columnToProductModelPropertyMap: { columnName: string, propertyName: string }[] = [
     { columnName: 'Name:', propertyName: 'name' },
     { columnName: 'Price:', propertyName: 'price' },
-    { columnName: 'Counter:', propertyName: 'numberOfProducts'}
+    { columnName: 'Counter:', propertyName: 'numberOfProducts' }
   ];
 
   private toggleSort = true;
@@ -37,38 +37,57 @@ export class CartListComponent implements OnInit, OnDestroy {
       setInterval(() => {
         this.ref.detectChanges();
       }, 500);
-   }
+  }
 
   ngOnInit(): void {
-      this.subscription = this.cartListService.cartProducts.subscribe(
+    this.subscription = this.cartListService.getCartProducts().subscribe(
+      data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
+    );
+
+    this.cartListService.isCartListChanged.subscribe(() =>
+      this.cartListService.getCartProducts().subscribe(
         data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
-      );
+    ));
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  onDeleteProduct(removedProductId: number) {
-    const existingItem = this.cartListService.cartProducts.value.find(p => p.id === removedProductId);
-
-    this.cartListService.decreaseQuantity(existingItem, 1);
+  onDeleteCartItem(removedCartItem: CartModel): void {
+    this.cartListService.decreaseQuantity(removedCartItem, removedCartItem.numberOfProducts);
   }
 
   onBackClick(): void {
     this.location.back();
   }
 
+  countTotalSum(): number {
+    let sum = 0;
+    this.cartListProducts.getValue().forEach((val) => sum += val.price * val.numberOfProducts);
+
+    return sum;
+  }
+
+  countTotalQuantity(): number {
+    let sum = 0;
+    this.cartListProducts.getValue().forEach((val) => sum += val.numberOfProducts);
+
+    return sum;
+  }
+
   onCheckout(): void {
     this.router.navigate(['order']);
   }
 
-  onEditItem(entry: {productId: number, productNumber: number}): void {
-    const existingItem = this.cartListService.cartProducts.value.find(p => p.id === entry.productId);
+  onEditItem(entry: { productId: number, productNumber: number }): void {
+    this.cartListService.getCartProductById(entry.productId).then(existingItem => {
+      entry.productNumber > existingItem.numberOfProducts
+        ? this.cartListService.increaseQuantity(existingItem.id, entry.productNumber - existingItem.numberOfProducts)
+        : this.cartListService.decreaseQuantity(existingItem, existingItem.numberOfProducts - entry.productNumber);
 
-    entry.productNumber > existingItem.numberOfProducts
-    ? this.cartListService.increaseQuantity(existingItem, entry.productNumber - existingItem.numberOfProducts)
-    : this.cartListService.decreaseQuantity(existingItem, existingItem.numberOfProducts - entry.productNumber);
+      this.cartListService.isCartListChanged.next();
+    });
   }
 
   onLabelClick(columnName: string): void {
