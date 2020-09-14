@@ -10,8 +10,8 @@ import { ProductModule } from './products/product.module';
 import { SharedModule } from './shared/shared.module';
 import { AboutComponent } from './layout/components/about.component';
 import { OrderModule } from './orders/order.module';
-import { httpInterceptorProviders } from './core/interceptors';
 import { TimingInterceptor } from './core/interceptors/timing.interceptor';
+import { LocalStorageService } from './core/services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,11 @@ import { TimingInterceptor } from './core/interceptors/timing.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: TimingInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: LocalStorageService,
+      useClass: LocalStorageService
+    },
   ],
   bootstrap: [AppComponent]
 })
