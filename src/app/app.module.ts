@@ -1,15 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FirstComponent } from './first/components/first/first.component';
-import { ProductRepository } from './shared/repositories/product-repository';
 import { CartModule } from './cart/cart.module';
 import { ProductModule } from './products/product.module';
 import { SharedModule } from './shared/shared.module';
 import { AboutComponent } from './layout/components/about.component';
 import { OrderModule } from './orders/order.module';
+import { TimingInterceptor } from './core/interceptors/timing.interceptor';
+import { LocalStorageService } from './core/services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -23,10 +25,19 @@ import { OrderModule } from './orders/order.module';
     ProductModule,
     SharedModule,
     OrderModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
-    ProductRepository
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TimingInterceptor,
+      multi: true
+    },
+    {
+      provide: LocalStorageService,
+      useClass: LocalStorageService
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -15,7 +15,7 @@
 </svg>
 </button>
   <div class="parent" *ngIf="currentProductList?.length > 0">
-    <span *ngFor="let item of currentProductList">
+    <span *ngFor="let item of currentProductList | orderby:'name'">
         <app-product-component [sourceProduct]="item" (boughtProduct)="onBuyProduct($event)" (viewedProduct)="onViewClick($event.id)"></app-product-component>
       </span>
 </div>

@@ -1,85 +1,100 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
-import { ProductRepository } from 'src/app/shared/repositories/product-repository';
-import { CartLazyModule } from '../cart-lazy.module';
+import { Observable, Subject } from 'rxjs';
+
+import { ProductService } from 'src/app/products/services/product-service';
 import { CartModel } from '../models/cart.model';
 
-@Injectable({
-    providedIn: CartLazyModule
-})
+@Injectable()
 export class CartService {
-    cartProducts = new BehaviorSubject<CartModel[]>([new CartModel(1, 'Jackson JS22 JS-Series Dinky, Natural Oil', 200, 2)]);
+    private cartUrl = 'http://localhost:3000/cart';
+    private options = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
-    totalSum: number;
-    totalQuantity: number;
+    isCartListChanged = new Subject<void>();
 
-    constructor(private productRepository: ProductRepository) {
-        this.updateCartData();
+    constructor(private productService: ProductService, private http: HttpClient) { }
+
+    getCartProducts(): Observable<CartModel[]> {
+        return this.http.get<CartModel[]>(this.cartUrl);
     }
 
-    increaseQuantity(product: CartModel, numberOfProducts: number): void {
-        const existingProduct = this.cartProducts.value.find(p => p.id === product.id);
+    getCartProductById(id: number): Promise<CartModel> {
+        const url = `${this.cartUrl}/${id}`;
 
-        if (numberOfProducts === 0) {
-            this.removeProduct(product.id, 0);
-        } else {
-            existingProduct
-            ? this.addProduct(existingProduct, numberOfProducts)
-            : this.addProduct(product, numberOfProducts);
-        }
+        return this.http
+            .get(url)
+            .toPromise()
+            .then(response => response as CartModel);
+    }
 
-        this.productRepository.decreaseNumberOfSpecificProduct(product.id, numberOfProducts);
-        this.updateCartData();
+    addProductToCart(cartItem: CartModel, numberOfProducts: number) {
+        this.getCartProducts().subscribe(products => {
+            products.find(p => p.id === cartItem.id)
+                ? this.increaseQuantity(cartItem.id, numberOfProducts)
+                : this.createCartProduct(cartItem).subscribe(() => this.increaseQuantity(cartItem.id, numberOfProducts));
+
+            this.isCartListChanged.next();
+        });
+    }
+
+    increaseQuantity(cartItemId: number, numberOfProducts: number): void {
+        this.getCartProductById(cartItemId).then(cartItem => {
+            numberOfProducts === 0
+            ? this.removeProductFromCart(cartItem.id, 0)
+            : cartItem.numberOfProducts += numberOfProducts;
+
+            this.productService.decreaseNumberOfSpecificProduct(cartItem.id, numberOfProducts);
+            this.updateCart(cartItem).subscribe();
+        });
     }
 
     decreaseQuantity(product: CartModel, numberOfProducts: number): void {
-        this.removeProduct(product.id, numberOfProducts);
-
-        this.productRepository.increaseNumberOfSpecificProduct(product.id, numberOfProducts);
-        this.updateCartData();
+        this.removeProductFromCart(product.id, numberOfProducts);
+        this.productService.increaseNumberOfSpecificProduct(product.id, numberOfProducts);
     }
 
     removeAllProducts(): void {
-        this.cartProducts.value.forEach(item =>
-            this.productRepository.increaseNumberOfSpecificProduct(item.id, item.numberOfProducts));
-        this.cartProducts.next([]);
-
-        this.updateCartData();
+        this.getCartProducts().subscribe(products => {
+            products.forEach(item => {
+                this.deleteCartItem(item.id);
+                this.productService.increaseNumberOfSpecificProduct(item.id, item.numberOfProducts);
+            });
+            this.isCartListChanged.next();
+        });
     }
 
-    countTotalSum(): number {
-         let sum = 0;
-         this.cartProducts.value.forEach((val) => sum += val.price * val.numberOfProducts);
-
-         return sum;
+    deleteCartItem(id: number): void {
+        const url = `${this.cartUrl}/${id}`;
+        this.http.delete(url).subscribe();
     }
 
-    countTotalQuantity(): number {
-        let sum = 0;
-        this.cartProducts.value.forEach(product => sum += product.numberOfProducts);
+    private removeProductFromCart(productId: number, numberOfProducts: number): void {
+        this.getCartProductById(productId).then(product => {
+            product.numberOfProducts <= numberOfProducts
+                ? product.numberOfProducts -= product.numberOfProducts
+                : product.numberOfProducts -= numberOfProducts;
 
-        return sum;
+            product.numberOfProducts > 0
+                ? this.updateCart(product).subscribe()
+                : this.deleteCartItem(productId);
+
+            this.isCartListChanged.next();
+        });
     }
 
-    private addProduct(product: CartModel, numberOfProducts: number): void {
-        const existingProduct = this.cartProducts.value.find(p => p.id === product.id);
+    private updateCart(cartItem: CartModel): Observable<CartModel> {
+        const url = `${this.cartUrl}/${cartItem.id}`;
+        const body = JSON.stringify(cartItem);
 
-        existingProduct
-         ? existingProduct.numberOfProducts += numberOfProducts
-         : this.cartProducts.next(this.cartProducts.value.concat([product]));
+        return this.http.put<CartModel>(url, body, this.options);
     }
 
-    private updateCartData(): void {
-        this.totalQuantity = this.countTotalQuantity();
-        this.totalSum = this.countTotalSum();
-    }
+    private createCartProduct(cartItem: CartModel): Observable<CartModel> {
+        const body = JSON.stringify(cartItem);
 
-    private removeProduct(productId: number, numberOfProducts: number): void {
-        const removedProduct = this.cartProducts.getValue().find(p => p.id === productId);
-
-        removedProduct.numberOfProducts <= numberOfProducts
-        ? this.cartProducts.next(this.cartProducts.getValue().filter(p => p.id !== productId))
-        : removedProduct.numberOfProducts -= numberOfProducts;
+        return this.http.post<CartModel>(this.cartUrl, body, this.options);
     }
 }

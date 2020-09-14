@@ -6,5 +6,6 @@ export class ProductModel {
         public supplyDate: Date,
         public description: string,
         public linkToPicture: string,
-        public isAvailable: boolean) { }
+        public isAvailable: boolean,
+        public numberOfAvailableProducts: number) { }
 }

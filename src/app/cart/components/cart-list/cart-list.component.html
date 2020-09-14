@@ -12,15 +12,15 @@
         <label class="col font-weight-bold" (click)="onLabelClick($event.target.innerText)" id="sort">Counter:</label>
         <label class="col font-weight-bold"></label>
     </div>
-    <span *ngFor="let item of cartListProducts.value">
+    <span *ngFor="let item of cartListProducts?.value">
         <app-cart-item-component appHighlight [item]="item"
-        (deletedItemId)="onDeleteProduct($event)"
+        (deletedItem)="onDeleteCartItem($event)"
         (editedItem)="onEditItem($event)"></app-cart-item-component>
     </span>
 
     <div class="d-flex flex-row pt-2 pb-2 mt-2">
-        <span class="col pl-2 pt-2"> The {{cartListService.totalQuantity}} product(s) cost
-            {{cartListService.totalSum | currency:'':'symbol':'.1-1'}}
+        <span class="col pl-2 pt-2"> The {{ countTotalQuantity() }} product(s) cost
+            {{ countTotalSum() | currency:'':'symbol':'.1-1'}}
         </span>
         <span class="col">
             <button class="btn btn-secondary" (click)="cartListService.removeAllProducts()">Remove All</button>

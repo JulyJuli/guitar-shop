@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-
 
 import { ProductModel } from 'src/app/products/models/product.model';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
@@ -8,7 +7,6 @@ import { PopoverDirective } from 'ngx-bootstrap/popover';
 @Component({
   selector: 'app-product-component',
   templateUrl: './product.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
@@ -16,18 +14,13 @@ export class ProductComponent {
   @Output() boughtProduct = new EventEmitter<ProductModel>();
   @Output() viewedProduct = new EventEmitter<ProductModel>();
 
-  constructor(private router: Router, private ref: ChangeDetectorRef) {
-    ref.detach();
-    setInterval(() => {
-      this.ref.detectChanges();
-    }, 500);
- }
+  constructor(private router: Router) { }
 
   onBuy(popover: PopoverDirective): void {
     if (this.sourceProduct.isAvailable) {
       console.log(`OnBuy was clicked for ${this.sourceProduct.name}`);
       this.boughtProduct.emit(this.sourceProduct);
-      setInterval(() => { popover.hide(); }, 1000);
+      setInterval(() => { popover.hide(); }, 2000);
     }
   }
 
