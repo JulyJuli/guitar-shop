@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/guards/auth.guard';
 import { OrderComponent } from './components/order-form/order.component';
 import { OrderResultComponent } from './components/order-result/order-result.component';
+import { ProcessOrderComponent } from './components/process-order/process-order.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: 'order-list',
     canActivate: [AuthGuard],
     component: OrderResultComponent
+  },
+  {
+    path: 'process-order/:orderId',
+    component: ProcessOrderComponent
   }
 ];
 
