@@ -49,7 +49,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.localStorage.setItem(this.currentOrderId, this.cartListProducts.value);
     this.cartListService.removeAllProducts();
 
-    const link = ['/order-result', this.currentOrderId];
+    const link = ['/process-order', this.currentOrderId];
     this.router.navigate(link);
   }
 }
