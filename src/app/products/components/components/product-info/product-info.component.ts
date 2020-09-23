@@ -23,6 +23,7 @@ export class ProductInfoComponent implements OnInit {
         private cartService: CartService) { }
 
     ngOnInit(): void {
+      // тут можно использовать switchMap
        this.activatedRouter.params.subscribe(params => {
             const propertyName = 'productId';
             this.productService.getProductById(+params[propertyName]).then(p => this.product = p);

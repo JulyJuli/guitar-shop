@@ -7,6 +7,10 @@ import { ProductModel } from '../models/product.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
+// жизненный цикл этого сервиса такой же как и жизненный цикл приложения,
+// так как он зарегистрирован с помощью декоратора модуля
+// это значит, что подписка будет отписана, когда приложение будет остановлено
+// по сути - отписку тут можно и не делать
 export class ProductService implements OnDestroy {
     private productUrl = 'http://localhost:3000/products';
     private subscription: Subscription;

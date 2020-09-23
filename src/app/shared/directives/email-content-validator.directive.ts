@@ -12,7 +12,7 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
   ]
 })
 export class EmailContentValidatorDirective implements Validator {
-  @HostListener('focusout')
+  @HostListener('focusout') // без декоратора директива не работала?
   validate(c: AbstractControl): { [key: string]: boolean } | null {
     return c?.value === 'qwerty@com.ua' ? {emailInvalid: true } : null;
   }
