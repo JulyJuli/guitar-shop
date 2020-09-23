@@ -44,6 +44,8 @@ export class CartListComponent implements OnInit, OnDestroy {
       data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
     );
 
+    // подписка в подписке является антипатерном, надо использовать switchMap, concatMap - что больше подходит
+    // и избавиться от вложеной подписки
     this.cartListService.isCartListChanged.subscribe(() =>
       this.cartListService.getCartProducts().subscribe(
         data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
