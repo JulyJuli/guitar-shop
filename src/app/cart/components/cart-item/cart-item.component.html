@@ -1,5 +1,5 @@
 <div class="d-flex flex-row pt-2">
-    <label class="col">{{item.name}}</label>
+    <label class="col cart-item-name">{{item.name}}</label>
     <label class="col">{{item.price | currency:'':'symbol':'.1-1'}}</label>
     <label class="col">{{item.price * item.numberOfProducts | currency:'':'symbol':'.1-1'}}</label>
     <input class="col form-control pl-2"
@@ -11,6 +11,6 @@
            (focusout)="onItemFocusout(item.id, $event.target.value)"
            oninput="validity.valid||(value='');">
     <span  class="col">
-        <button class="btn btn-secondary" (click)="onDelete()">Delete</button>
+        <button class="btn btn-secondary delete-button" (click)="onDelete()">Delete</button>
     </span>
 </div>

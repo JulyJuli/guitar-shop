@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AppSettingsService } from './core/services/app-settings.service';
@@ -9,11 +9,9 @@ import { AuthService } from './core/services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  constructor(public authService: AuthService, private router: Router, private addSettings: AppSettingsService) { }
-
-  ngOnInit(): void {
+  constructor(public authService: AuthService, private router: Router, private addSettings: AppSettingsService) {
     this.addSettings.loadAppSettings();
   }
 
