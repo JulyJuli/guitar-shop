@@ -1,23 +1,17 @@
-import { Injectable, EventEmitter, OnDestroy } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
-import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 
 import { ProductModel } from '../models/product.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
-export class ProductService implements OnDestroy {
+export class ProductService {
     private productUrl = 'http://localhost:3000/products';
-    private subscription: Subscription;
 
     isProductListChanged = new EventEmitter<void>();
 
     constructor(private http: HttpClient) { }
-
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
 
     getProducts(): Observable<ProductModel[]> {
         return this.http.get<ProductModel[]>(this.productUrl);

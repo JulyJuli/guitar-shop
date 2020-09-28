@@ -30,7 +30,7 @@ describe('AppComponent (Shallow)', () => {
   afterEach(() => {
     mockHttp.verify();
   });
-  
+
   it('should load settings on start', () => {
     const settingsService = TestBed.inject(AppSettingsService);
     const spy = spyOn(settingsService, 'loadAppSettings');

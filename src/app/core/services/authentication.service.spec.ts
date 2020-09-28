@@ -1,4 +1,4 @@
-import { AuthService } from "./auth.service";
+import { AuthService } from './auth.service';
 
 describe('Auth service', () => {
   let authService: AuthService;

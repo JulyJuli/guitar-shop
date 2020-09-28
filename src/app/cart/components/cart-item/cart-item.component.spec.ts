@@ -6,10 +6,10 @@ import { CartItemComponent } from './cart-item.component';
 import { CartModel } from '../../models/cart.model';
 
 describe('HeaderComponent', () => {
-  let component: CartItemComponent,
-    fixture: ComponentFixture<CartItemComponent>,
-    nameEl: DebugElement,
-    removeButton: DebugElement;
+  let component: CartItemComponent;
+  let fixture: ComponentFixture<CartItemComponent>;
+  let nameEl: DebugElement;
+  let removeButton: DebugElement;
 
   const cartItem = {
       id: 1,

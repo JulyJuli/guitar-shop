@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
@@ -12,7 +12,6 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
   ]
 })
 export class EmailContentValidatorDirective implements Validator {
-  @HostListener('focusout')
   validate(c: AbstractControl): { [key: string]: boolean } | null {
     return c?.value === 'qwerty@com.ua' ? {emailInvalid: true } : null;
   }

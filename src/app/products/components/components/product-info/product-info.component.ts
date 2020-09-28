@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { ProductModel } from 'src/app/products/models/product.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,6 +15,8 @@ import { CartModel } from 'src/app/cart/models/cart.model';
     styleUrls: ['./product-info.component.css']
 })
 export class ProductInfoComponent implements OnInit {
+    private propertyName = 'productId';
+
     product: ProductModel;
 
     constructor(
@@ -23,10 +26,9 @@ export class ProductInfoComponent implements OnInit {
         private cartService: CartService) { }
 
     ngOnInit(): void {
-       this.activatedRouter.params.subscribe(params => {
-            const propertyName = 'productId';
-            this.productService.getProductById(+params[propertyName]).then(p => this.product = p);
-          });
+       this.activatedRouter.params.pipe(
+        switchMap(params => this.productService.getProductById(+params[this.propertyName])))
+        .subscribe(p => this.product = p);
     }
 
     onBackClick(): void {

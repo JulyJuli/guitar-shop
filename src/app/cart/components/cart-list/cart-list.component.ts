@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 import { Location } from '@angular/common';
 
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 
 import { CartService } from '../../services/cart-list-service';
 import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
@@ -44,10 +45,9 @@ export class CartListComponent implements OnInit, OnDestroy {
       data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
     );
 
-    this.cartListService.isCartListChanged.subscribe(() =>
-      this.cartListService.getCartProducts().subscribe(
-        data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); }
-    ));
+    this.cartListService.isCartListChanged.pipe(
+      concatMap(() => this.cartListService.getCartProducts())).subscribe(
+        data => { this.cartListProducts = new BehaviorSubject<CartModel[]>(data); });
   }
 
   ngOnDestroy(): void {
