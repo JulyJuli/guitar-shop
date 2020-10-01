@@ -1,27 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { CartModel } from 'src/app/cart/models/cart.model';
 import { CartService } from 'src/app/cart/services/cart-list-service';
-import { AppState, ProductsState } from 'src/app/core/@ngrx_module';
+import { AppState } from 'src/app/core/@ngrx_module';
 import { selectProductsData } from 'src/app/core/@ngrx_module/products/products.selectors';
 import { IProduct } from 'src/app/products/models/iproduct';
 import * as ProductsActions from 'src/app/core/@ngrx_module/products/products.actions';
 import { ProductModel } from 'src/app/products/models/product.model';
-import { ProductService } from 'src/app/products/services/product-service';
-import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
-import { concatMap } from 'rxjs/operators';
+import * as RouterActions from 'src/app/core/@ngrx_module/router/router.actions';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit, OnDestroy {
-  childSubscription: Subscription;
+export class ProductListComponent implements OnInit {
   products$: Observable<ReadonlyArray<IProduct>>;
 
   constructor(
@@ -32,10 +29,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.products$ = this.store.pipe(select(selectProductsData));
     this.store.dispatch(ProductsActions.getProducts());
-  }
-
-  ngOnDestroy(): void {
-    this.childSubscription.unsubscribe();
   }
 
   onBuyProduct(product: ProductModel): void {
@@ -49,7 +42,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   onViewClick(productId: number): void {
     const link = ['/product-info', productId];
-    this.router.navigate(link);
+    this.store.dispatch(RouterActions.go(
+      {
+        path: link
+      })
+    );
   }
 
   onSortChange(sortKey: string) {
