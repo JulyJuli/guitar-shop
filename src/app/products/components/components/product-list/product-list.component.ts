@@ -1,13 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
-import { CartModel } from 'src/app/cart/models/cart.model';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
+import { CartModel } from 'src/app/cart/models/cart.model';
 import { CartService } from 'src/app/cart/services/cart-list-service';
+import { AppState, ProductsState } from 'src/app/core/@ngrx_module';
+import { selectProductsData } from 'src/app/core/@ngrx_module/products/products.selectors';
+import { IProduct } from 'src/app/products/models/iproduct';
+import * as ProductsActions from 'src/app/core/@ngrx_module/products/products.actions';
 import { ProductModel } from 'src/app/products/models/product.model';
 import { ProductService } from 'src/app/products/services/product-service';
 import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -16,18 +22,16 @@ import { OrderByPipe } from 'src/app/shared/pipes/order-by.pipe';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   childSubscription: Subscription;
-  currentProductList: ProductModel[];
+  products$: Observable<ReadonlyArray<IProduct>>;
 
   constructor(
     private router: Router,
-    private productService: ProductService,
     private cartService: CartService,
-    private sortingService: OrderByPipe) { }
+    private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((products: ProductModel[]) => this.currentProductList = products);
-    this.childSubscription = this.productService.isProductListChanged.subscribe(
-      () => this.productService.getProducts().subscribe((products: ProductModel[]) => this.currentProductList = products));
+    this.products$ = this.store.pipe(select(selectProductsData));
+    this.store.dispatch(ProductsActions.getProducts());
   }
 
   ngOnDestroy(): void {
@@ -49,6 +53,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onSortChange(sortKey: string) {
-    this.sortingService.transform(this.currentProductList, sortKey);
+    this.store.dispatch(ProductsActions.sortProductList({ columnName: sortKey }));
   }
 }

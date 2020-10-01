@@ -6,12 +6,14 @@ import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
 
-  constructor(public authService: AuthService, private router: Router, private addSettings: AppSettingsService) {
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private addSettings: AppSettingsService) {
     this.addSettings.loadAppSettings();
   }
 
