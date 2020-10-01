@@ -1,30 +1,36 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+// @NgRx
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
+import { environment } from './../../../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 import { ProductsStoreModule } from './products/products-store.module';
+
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { routerReducers, CustomSerializer, RouterEffects } from './router';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    ProductsStoreModule,
-    StoreModule.forRoot(
-      {},
-      {
-        runtimeChecks: {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
-          strictStateSerializability: true,
-          strictActionSerializability: true,
-          strictActionWithinNgZone: true,
-        },
+    StoreModule.forRoot(routerReducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: false,
+        strictActionSerializability: false
       }
-    ),
+    }),
+    EffectsModule.forRoot([RouterEffects]),
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
+      serializer: CustomSerializer
 
-    // Instrumentation must be imported after importing StoreModule (config is optional)
+    }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-  ],
+    ProductsStoreModule
+  ]
 })
-export class RootStoreModule {}
+export class RootStoreModule { }

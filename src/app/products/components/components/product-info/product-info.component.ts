@@ -8,14 +8,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/products/services/product-service';
 import { CartService } from 'src/app/cart/services/cart-list-service';
 import { CartModel } from 'src/app/cart/models/cart.model';
+import { select, Store } from '@ngrx/store';
+import { AppState, selectSelectedProductByUrl } from 'src/app/core/@ngrx_module';
 
 @Component({
     selector: 'app-product-info-component',
     templateUrl: './product-info.component.html',
     styleUrls: ['./product-info.component.css']
 })
-export class ProductInfoComponent implements OnInit {
+export class ProductInfoComponent implements OnInit, OnDestroy {
     private propertyName = 'productId';
+    private subscription: Subscription;
 
     product: ProductModel;
 
@@ -23,12 +26,17 @@ export class ProductInfoComponent implements OnInit {
         private activatedRouter: ActivatedRoute,
         private router: Router,
         private productService: ProductService,
+        private store: Store<AppState>,
         private cartService: CartService) { }
 
     ngOnInit(): void {
-       this.activatedRouter.params.pipe(
-        switchMap(params => this.productService.getProductById(+params[this.propertyName])))
-        .subscribe(p => this.product = p);
+        this.subscription = this.store
+        .pipe(select(selectSelectedProductByUrl))
+        .subscribe(product => (this.product = { ...product }));
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     onBackClick(): void {
