@@ -26,7 +26,7 @@ export class ProductService {
             .then(response => response as ProductModel);
     }
 
-    decreaseNumberOfSpecificProduct(productId: number, numberOfProducts: number): void {
+    decreaseNumberOfSpecificProduct(productId: number, numberOfProducts: number): Observable<void> {
         this.getProductById(productId).then(existingProduct => {
             existingProduct.numberOfAvailableProducts > numberOfProducts
                 ? existingProduct.numberOfAvailableProducts -= numberOfProducts
@@ -38,6 +38,8 @@ export class ProductService {
 
             this.updateProduct(existingProduct).then(() => this.isProductListChanged.emit());
         });
+
+        return;
     }
 
     increaseNumberOfSpecificProduct(productId: number, numberOfProducts: number) {

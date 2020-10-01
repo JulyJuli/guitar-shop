@@ -30,7 +30,7 @@ export class CartService {
             .then(response => response as CartModel);
     }
 
-    addProductToCart(cartItem: CartModel, numberOfProducts: number) {
+    addProductToCart(cartItem: CartModel, numberOfProducts: number): Observable<void> {
         this.getCartProducts().subscribe(products => {
             products.find(p => p.id === cartItem.id)
                 ? this.increaseQuantity(cartItem.id, numberOfProducts)
@@ -38,6 +38,8 @@ export class CartService {
 
             this.isCartListChanged.next();
         });
+
+        return;
     }
 
     increaseQuantity(cartItemId: number, numberOfProducts: number): void {
