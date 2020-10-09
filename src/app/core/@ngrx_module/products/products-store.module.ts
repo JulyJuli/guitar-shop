@@ -10,7 +10,9 @@ import { productsReducer } from './products.reducer';
   imports: [
     CommonModule,
     StoreModule.forFeature('products', productsReducer),
-    EffectsModule.forRoot([ProductsEffects]),
+    // вот тут была ошибка, у вас не срабатывал эффект и не доставал продукты,
+    // вы использовали не forFeature, а forRoot
+    EffectsModule.forFeature([ProductsEffects]),
   ],
 })
 export class ProductsStoreModule {}
